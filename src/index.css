@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-serif: 'Cinzel', 'Playfair Display', Georgia, serif;
+    --color-lavender: #A594F9;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #0F0F12;
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-sans);
+  }
+
+  .font-serif-title {
+    font-family: var(--font-serif);
+  }
+
+  .text-lavender {
+    color: #A594F9;
+  }
+
+  .bg-lavender {
+    background-color: #A594F9;
+  }
+
+  .border-lavender {
+    border-color: #A594F9;
+  }
+}
+
+/* SMOOTH HIGH-QUALITY RENDERING FOR PHOTOGRAPHY */
+img {
+  image-rendering: auto;           /* Browser default smooth interpolation */
+  -ms-interpolation-mode: bicubic; /* IE bicubic smooth scaling */
+  backface-visibility: hidden;
+  transform: translateZ(0);        /* GPU layer for crisp compositing */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  height: 4px;
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5E5E7;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A594F9;
+}
+
+/* Glassmorphism Header Light */
+.glass-header-clean {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(240, 240, 243, 0.9);
+}
+
+.photo-card-hover {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.photo-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
+}
