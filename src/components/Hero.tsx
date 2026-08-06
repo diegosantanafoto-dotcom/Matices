@@ -1,5 +1,5 @@
 import React from 'react';
-import { Award, ArrowDown, ChevronRight, Play, Sparkles } from 'lucide-react';
+import { Award, ArrowDown, ChevronRight, Play } from 'lucide-react';
 
 interface HeroProps {
   onSelectCategoryFilter: (category: string) => void;
@@ -65,7 +65,6 @@ export const Hero: React.FC<HeroProps> = ({ onSelectCategoryFilter, onOpenBookin
                 onClick={() => onOpenBooking('Briefing Comercial')}
                 className="px-6 py-3.5 rounded-full bg-[#141416] hover:bg-[#1a1a1e] border border-[#26262B] hover:border-[#E4C080]/60 text-[#F4F4F5] font-medium text-xs tracking-widest uppercase transition-all flex items-center space-x-2 cursor-pointer"
               >
-                <Sparkles className="w-4 h-4 text-[#E4C080]" />
                 <span>Solicitar Briefing</span>
               </button>
             </div>

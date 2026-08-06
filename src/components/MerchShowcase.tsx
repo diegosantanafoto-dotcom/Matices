@@ -1,5 +1,5 @@
-import React from 'react';
-import { Printer, Sparkles, ArrowRight, CheckCircle2 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Printer, ArrowRight, CheckCircle2, Send } from 'lucide-react';
 
 interface TechniqueSection {
   id: string;
@@ -26,22 +26,22 @@ const MERCH_SECTIONS: TechniqueSection[] = [
     features: ['Acabados especiales (Dorado, Plata, Reflectante 3M)', 'Especial para sudaderas, camisetas y prendas deportivas', 'Alta resistencia a lavados intensos'],
     samples: [
       {
-        title: 'Vinilo Metalizado Dorado sobre Sudadera Heavyweight',
-        type: 'Vinilo de Corte Premium',
-        imageUrl: '/images/marcas/PIPO-12.jpg',
-        details: 'Gramaje 450g con logotipo en relieve vinílico dorado espejo.'
+        title: 'Botella de Agua & Termo Personalizado',
+        type: 'Vinilo & Adherencia Térmica',
+        imageUrl: '/images/marcas/1-5.jpg',
+        details: 'Botella de agua/termo de acero con logotipo vinílico de alta resistencia y durabilidad.'
       },
       {
-        title: 'Transfer Textil Reflectante en Gorras & Accesorios',
-        type: 'Transfer Térmico Reflectante',
-        imageUrl: '/images/marcas/PIPO-21.jpg',
-        details: 'Perfil bajo de algodón lavado con estampado reflectante visibilidad nocturna.'
+        title: 'Bolsas Tote Bag Personalizadas "Laura"',
+        type: 'Transfer Textil & Vinilo',
+        imageUrl: '/images/marcas/1-12.jpg',
+        details: 'Lona de algodón peinado personalizada con tipografía en vinilo recortado de precisión.'
       },
       {
-        title: 'Vinilo Flocado Mate sobre Camiseta de Algodón',
-        type: 'Vinilo Flocado Efecto Velvet',
-        imageUrl: '/images/marcas/PIPO-41.jpg',
-        details: 'Textura con tacto suave aterciopelado sobre algodón orgánico 240g.'
+        title: 'Caja de Presentación con Camiseta Estampada',
+        type: 'Packaging & Vinilo Textil',
+        imageUrl: '/images/marcas/1-15.jpg',
+        details: 'Camiseta de algodón con estampado en relieve presentada en caja corporativa.'
       }
     ]
   },
@@ -54,22 +54,22 @@ const MERCH_SECTIONS: TechniqueSection[] = [
     features: ['Sin límite de colores ni degradados (Calidad Fotográfica HD)', 'Tacto suave ultra-flexible que no se cuartea', 'Apto para prendas oscuras y claras sin marco transparente'],
     samples: [
       {
-        title: 'Ilustración Fotográfica en Espalda de Camiseta Oversized',
-        type: 'DTF Full Color HD',
-        imageUrl: '/images/marcas/PIPO-29.jpg',
-        details: 'Algodón peinado 280g con estampado de gradiente fotográfico en alta resolución.'
+        title: 'Botella de Agua & Merchandising Full Color',
+        type: 'DTF HD Full Color',
+        imageUrl: '/images/marcas/1-5.jpg',
+        details: 'Personalización de accesorios y botellas con estampado DTF en alta definición.'
       },
       {
-        title: 'Bolsas Tote Bag de Algodón Reciclado con Logotipo Multicolor',
+        title: 'Bolsas Tote Bag de Algodón "Laura"',
         type: 'DTF Textil Eco-Friendly',
-        imageUrl: '/images/marcas/PIPO-54.jpg',
-        details: 'Lona de algodón 300g personalizada con degradados y líneas de alta definición.'
+        imageUrl: '/images/marcas/1-12.jpg',
+        details: 'Bolsas de algodón reciclado con diseño gráfico a todo color sin marco transparente.'
       },
       {
-        title: 'Detalle de Marca en Manga & Pecho de Sudadera',
-        type: 'DTF Micro-Detalle',
-        imageUrl: '/images/marcas/PIPO-70.jpg',
-        details: 'Estampado de precisión milimétrica en puños, mangas y cuellos.'
+        title: 'Caja con Camiseta Estampada a Todo Color',
+        type: 'DTF Premium & Packaging',
+        imageUrl: '/images/marcas/1-15.jpg',
+        details: 'Packaging corporativo con camiseta peinada y estampado DTF fotográfico ultra-flexible.'
       }
     ]
   },
@@ -82,22 +82,22 @@ const MERCH_SECTIONS: TechniqueSection[] = [
     features: ['Vectorización profesional de archivos pesados', 'Maquetación previa en Mockups 3D de prendas', 'Asesoramiento técnico en gramajes y tintas'],
     samples: [
       {
-        title: 'Maquetación Digital de Colección Capsule Merch',
-        type: 'Diseño & Mockup 3D',
-        imageUrl: '/images/marcas/SAN07748.jpg',
-        details: 'Previsualización exacta de posición de estampados y etiquetas.'
+        title: 'Diseño & Adaptación de Marca para Óptica / Gafas',
+        type: 'Diseño Gráfico & Branding',
+        imageUrl: '/images/marcas/1-125.jpg',
+        details: 'Desarrollo visual, grabado de marca y diseño gráfico aplicado a monturas de gafas.'
       },
       {
-        title: 'Identidad Visual & Etiquetado Personalizado',
-        type: 'Diseño de Etiqueta & Packaging',
-        imageUrl: '/images/marcas/venta instrumentos-1.jpg',
-        details: 'Etiqueta tejida cosida al cuello y packaging de presentación.'
+        title: 'Dirección de Arte & Packaging para Gafas de Sol',
+        type: 'Diseño & Packaging de Autor',
+        imageUrl: '/images/marcas/1-128.jpg',
+        details: 'Diseño de fundas, grabado personalizado e identidad gráfica para colecciones de óptica.'
       },
       {
-        title: 'Adaptación Vectorial para Serigrafía & Vinilo',
-        type: 'Separación de Color & Vectores',
-        imageUrl: '/images/marcas/SAN08125.jpg',
-        details: 'Optimización de líneas de corte y fotolitos de impresión.'
+        title: 'Maquetación Digital & Grabado en Monturas',
+        type: 'Vectorización & Mockups 3D',
+        imageUrl: '/images/marcas/1-139.jpg',
+        details: 'Vectorización precisa y adaptación de logotipos para patillas y lentes.'
       }
     ]
   }
@@ -105,9 +105,24 @@ const MERCH_SECTIONS: TechniqueSection[] = [
 
 interface MerchShowcaseProps {
   onOpenBooking: (type?: string) => void;
+  onOpenLegal?: (tab?: 'IMPRESSUM' | 'PRIVACY' | 'COOKIES') => void;
 }
 
-export const MerchShowcase: React.FC<MerchShowcaseProps> = ({ onOpenBooking }) => {
+export const MerchShowcase: React.FC<MerchShowcaseProps> = ({ onOpenBooking, onOpenLegal }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    technique: 'DTF Full Color HD',
+    quantity: '50-200 uds',
+    details: ''
+  });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
   return (
     <section id="merch" className="pt-56 pb-24 bg-white w-full border-0">
       
@@ -235,29 +250,152 @@ export const MerchShowcase: React.FC<MerchShowcaseProps> = ({ onOpenBooking }) =
           ))}
         </div>
 
-        {/* BOTTOM CTA BANNER */}
-        <div className="p-8 sm:p-12 bg-gray-900 text-white rounded-none space-y-6 text-center max-w-4xl mx-auto border-0">
-          <div className="inline-flex items-center space-x-2 text-xs font-sans uppercase tracking-widest text-[#A594F9] font-bold">
-            <Sparkles className="w-4 h-4" />
-            <span>Desarrollo Integral de Merchandising de Autor</span>
+        {/* FORMULARIO MINIMALISTA DE PROYECTOS DE PERSONALIZACIÓN */}
+        <div id="formulario-personalizacion" className="pt-16 pb-12 border-t border-gray-100 max-w-4xl mx-auto space-y-10">
+          <div className="text-center space-y-3">
+            <div className="inline-flex items-center space-x-2 text-xs font-sans uppercase tracking-widest text-[#A594F9] font-bold">
+              <span>Solicitud Directa</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F0F12] font-outfit tracking-tight">
+              Inicia tu Proyecto de Personalización
+            </h2>
+            <p className="text-xs sm:text-sm text-[#666670] font-light max-w-lg mx-auto leading-relaxed">
+              Completa los detalles de tu marca o idea. Te responderemos con una propuesta técnica y maquetación sin compromiso.
+            </p>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-outfit">
-            ¿Tienes dudas sobre qué técnica (Vinilo, DTF o Diseño) usar?
-          </h2>
+          {!submitted ? (
+            <form onSubmit={handleSubmit} className="bg-gray-50/70 p-8 sm:p-12 border border-gray-200/80 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 block">
+                    Nombre / Marca *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    placeholder="Ej. Laura / Studio Atelier"
+                    className="w-full bg-white border border-gray-200 px-4 py-3 text-xs font-sans text-[#0F0F12] placeholder-gray-400 outline-none focus:border-[#A594F9] transition-colors"
+                  />
+                </div>
 
-          <p className="text-xs sm:text-sm text-gray-300 max-w-xl mx-auto font-light leading-relaxed">
-            Te guiamos de principio a fin: enviamos maquetas 3D digitalizadas de tus prendas y muestras físicas de estampado antes de entrar a producción.
-          </p>
+                <div className="space-y-2">
+                  <label className="text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 block">
+                    Email de Contacto *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    placeholder="hola@tumarca.com"
+                    className="w-full bg-white border border-gray-200 px-4 py-3 text-xs font-sans text-[#0F0F12] placeholder-gray-400 outline-none focus:border-[#A594F9] transition-colors"
+                  />
+                </div>
+              </div>
 
-          <div className="pt-2">
-            <button
-              onClick={() => onOpenBooking('Asesoría Técnica de Merch & Estampado')}
-              className="px-8 py-4 rounded-none bg-[#A594F9] hover:bg-indigo-500 text-white font-bold text-xs tracking-widest uppercase transition-colors inline-flex items-center space-x-2 cursor-pointer shadow-xl font-outfit"
-            >
-              <Sparkles className="w-4 h-4 text-white" />
-              <span>Solicitar Asesoría de Estampado</span>
-            </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 block">
+                    Técnica de Interés
+                  </label>
+                  <select
+                    value={formData.technique}
+                    onChange={(e) => setFormData({ ...formData, technique: e.target.value })}
+                    className="w-full bg-white border border-gray-200 px-4 py-3 text-xs font-sans text-[#0F0F12] outline-none focus:border-[#A594F9] transition-colors cursor-pointer"
+                  >
+                    <option value="DTF Full Color HD">Estampado DTF Full Color HD</option>
+                    <option value="Vinilo de Corte & Transfer">Vinilo de Corte & Transfer Textil</option>
+                    <option value="Diseño Gráfico & Adaptación">Diseño Gráfico & Adaptación para Gafas/Merch</option>
+                    <option value="Asesoramiento Combinado">Asesoramiento Técnico Combinado</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 block">
+                    Unidades Estimadas
+                  </label>
+                  <select
+                    value={formData.quantity}
+                    onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                    className="w-full bg-white border border-gray-200 px-4 py-3 text-xs font-sans text-[#0F0F12] outline-none focus:border-[#A594F9] transition-colors cursor-pointer"
+                  >
+                    <option value="10-50 uds">10 – 50 unidades</option>
+                    <option value="50-200 uds">50 – 200 unidades</option>
+                    <option value="200-500 uds">200 – 500 unidades</option>
+                    <option value="+500 uds">Más de 500 unidades</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 block">
+                  Detalles del Proyecto
+                </label>
+                <textarea
+                  rows={4}
+                  value={formData.details}
+                  onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                  placeholder="Describe brevemente tus prendas, botellas, bolsas u objetos a personalizar..."
+                  className="w-full bg-white border border-gray-200 p-4 text-xs font-sans text-[#0F0F12] placeholder-gray-400 outline-none focus:border-[#A594F9] transition-colors resize-none"
+                ></textarea>
+              </div>
+
+              <div className="pt-2 text-center">
+                <button
+                  type="submit"
+                  className="w-full sm:w-auto px-10 py-4 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-bold text-xs tracking-widest uppercase transition-colors inline-flex items-center justify-center space-x-2 cursor-pointer font-outfit shadow-md"
+                >
+                  <span>Enviar Proyecto de Personalización</span>
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className="bg-gray-50 p-10 border border-gray-200 text-center space-y-4">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold font-outfit text-[#0F0F12]">
+                ¡Solicitud Recibida Correctamente!
+              </h3>
+              <p className="text-xs text-gray-600 font-light max-w-md mx-auto leading-relaxed">
+                Gracias por contactarnos. Evaluaremos tu proyecto ({formData.technique}) y te responderemos en menos de 24 horas.
+              </p>
+              <button
+                onClick={() => setSubmitted(false)}
+                className="text-xs font-bold text-[#A594F9] underline uppercase tracking-wider pt-2 cursor-pointer"
+              >
+                Enviar otra consulta
+              </button>
+            </div>
+          )}
+
+          {/* MINIMAL LEGAL FOOTER FOR MERCH PAGE */}
+          <div className="pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-xs font-sans text-gray-400 gap-4 text-center sm:text-left">
+            <p>© {new Date().getFullYear()} matices. Todos los derechos reservados.</p>
+            <div className="flex space-x-6">
+              <button
+                onClick={() => onOpenLegal && onOpenLegal('IMPRESSUM')}
+                className="hover:text-[#0F0F12] transition-colors cursor-pointer"
+              >
+                Aviso Legal / Impressum
+              </button>
+              <button
+                onClick={() => onOpenLegal && onOpenLegal('PRIVACY')}
+                className="hover:text-[#0F0F12] transition-colors cursor-pointer"
+              >
+                Privacidad (nLPD)
+              </button>
+              <button
+                onClick={() => onOpenLegal && onOpenLegal('COOKIES')}
+                className="hover:text-[#0F0F12] transition-colors cursor-pointer"
+              >
+                Cookies
+              </button>
+            </div>
           </div>
         </div>
 

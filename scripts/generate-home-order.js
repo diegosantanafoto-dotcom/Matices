@@ -22,18 +22,13 @@ const homeCleanItems = items.filter(item => {
   const lowerFile = file.toLowerCase();
   const lowerId = item.id.toLowerCase();
 
+  // Exclude ALL photos from 'marcas' and 'lifestyle' folders for the Home page
+  if (item.category === 'marcas' || item.category === 'lifestyle') return false;
+
   // Exclude massage / spa session photos as explicitly requested
   if (lowerId.includes('san07116') || lowerId.includes('san07328') || lowerId.includes('san07341')) return false;
   if (lowerFile.includes('masaje') || lowerFile.includes('spa')) return false;
 
-  if (item.category === 'marcas') {
-    if (file.startsWith('PIPO-')) return false;
-    if (file.startsWith('venta instrumentos')) return false;
-    if (file.startsWith('0-')) return false;
-    if (lowerFile.includes('logo')) return false;
-    if (lowerFile.includes('texto')) return false;
-    if (file === 'RETOCADA.jpg') return false;
-  }
   return true;
 });
 
@@ -86,92 +81,49 @@ function getSessionKey(item) {
   return `${item.category}_${base}`;
 }
 
-// 3. SELECT TOP HERO PHOTOS (First rows: most visually impactful shots)
-// Combination of:
-// - Chicas hermosas / retratos y moda femenina deslumbrantes
-// - Generales donde se vea majestuosidad (paisajes, arquitectura, bodas)
-// - Detalle de objeto solo (jugo de uva, repostería, producto)
-const heroCandidatesList = [
-  'moda-07', 'marcas-SAN07743', 'bodas-01', 'retratos-SAN01109', 'marcas-SAN08125',
-  'lifestyle-1-10', 'retratos-01-19', 'marcas-SAN07748', 'moda-05', 'marcas-SAN07890',
-  'moda-06', 'bodas-020', 'marcas-SAN08077', 'retratos-01-21', 'marcas-SAN08167',
-  'lifestyle-1-7', 'moda-030', 'marcas-SAN07757', 'moda-1-100', 'marcas-SAN08214',
-  'retratos-01-26', 'bodas-SAN04496', 'marcas-SAN08324', 'moda-1-101', 'marcas-SAN07788',
-  'lifestyle-1-27', 'retratos-SAN04522', 'marcas-SAN08085', 'moda-041', 'bodas-SAN04512',
-  'retratos-P1032579', 'marcas-SAN08024', 'moda-025', 'lifestyle-SAN01065', 'marcas-SAN08073',
-  'bodas-MG-5609', 'moda-038', 'marcas-3', 'retratos-GENETO', 'lifestyle-1-22'
-];
+// 3. VERSION 4: LAYOUT EDITORIAL DE GALERÍA DE AUTOR (COMPOSICIÓN POR TRÍADAS)
+// Organiza las fotos en tríadas armónicas: [Retrato / Moda / Boda] de alto impacto visual
+const excludedModa = ['moda-1-63', 'moda-1-19'];
+const excludedRetratos = ['retratos-1-41', 'retratos-1-22'];
+const excludedBodas = ['bodas-1-24', 'bodas-1-33'];
 
-const heroCleanSet = new Set();
-const heroCleanList = [];
+const poolModa = deduplicatedHomeItems.filter(i => i.category === 'moda' && !excludedModa.includes(i.id)).sort(() => Math.random() - 0.5);
+const poolRetratos = deduplicatedHomeItems.filter(i => i.category === 'retratos' && !excludedRetratos.includes(i.id)).sort(() => Math.random() - 0.5);
+const poolBodas = deduplicatedHomeItems.filter(i => i.category === 'bodas' && !excludedBodas.includes(i.id)).sort(() => Math.random() - 0.5);
 
-heroCandidatesList.forEach(candidateId => {
-  const found = deduplicatedHomeItems.find(item => item.id === candidateId || item.id.endsWith(candidateId));
-  if (found && !heroCleanSet.has(found.id)) {
-    heroCleanSet.add(found.id);
-    heroCleanList.push(found);
-  }
-});
+// Put previous opening photos back at the end of pools
+const prevModa = deduplicatedHomeItems.find(i => i.id === 'moda-1-63');
+if (prevModa) poolModa.push(prevModa);
 
-// Fill up heroCleanList to 40 items with other unique items if needed
-if (heroCleanList.length < 40) {
-  for (const item of deduplicatedHomeItems) {
-    if (!heroCleanSet.has(item.id)) {
-      heroCleanSet.add(item.id);
-      heroCleanList.push(item);
-      if (heroCleanList.length >= 40) break;
-    }
-  }
-}
+const prevRetratos = deduplicatedHomeItems.find(i => i.id === 'retratos-1-41');
+if (prevRetratos) poolRetratos.push(prevRetratos);
 
-// 4. INTERLEAVE REMAINING ITEMS
-// Prevent adjacent photos of the same category or session
-const remainingItems = deduplicatedHomeItems.filter(item => !heroCleanSet.has(item.id));
+const prevBodas = deduplicatedHomeItems.find(i => i.id === 'bodas-1-24');
+if (prevBodas) poolBodas.push(prevBodas);
 
-const sessionMap = new Map();
-remainingItems.forEach(item => {
-  const key = getSessionKey(item);
-  if (!sessionMap.has(key)) sessionMap.set(key, []);
-  sessionMap.get(key).push(item);
-});
+const finalHomeList = [];
+let turn = 0;
 
-const interleavedRemaining = [];
-let keys = Array.from(sessionMap.keys());
+while (poolModa.length > 0 || poolRetratos.length > 0 || poolBodas.length > 0) {
+  // Pattern 1: Moda -> Boda -> Retrato
+  // Pattern 2: Retrato -> Moda -> Boda
+  // Pattern 3: Boda -> Retrato -> Moda
+  const order = turn % 3 === 0
+    ? [poolModa, poolBodas, poolRetratos]
+    : turn % 3 === 1
+    ? [poolRetratos, poolModa, poolBodas]
+    : [poolBodas, poolRetratos, poolModa];
 
-while (sessionMap.size > 0) {
-  let addedInRound = false;
-  keys = keys.sort(() => Math.random() - 0.5);
-
-  for (const key of keys) {
-    const list = sessionMap.get(key);
-    if (list && list.length > 0) {
-      const last = interleavedRemaining[interleavedRemaining.length - 1];
-      const item = list[0];
-
-      if (!last || (last.category !== item.category && getSessionKey(last) !== getSessionKey(item))) {
-        interleavedRemaining.push(list.shift());
-        addedInRound = true;
-      }
-
-      if (list.length === 0) {
-        sessionMap.delete(key);
-      }
+  for (const pool of order) {
+    if (pool.length > 0) {
+      finalHomeList.push(pool.shift());
     }
   }
 
-  if (!addedInRound && sessionMap.size > 0) {
-    const firstKey = sessionMap.keys().next().value;
-    const list = sessionMap.get(firstKey);
-    interleavedRemaining.push(list.shift());
-    if (list.length === 0) sessionMap.delete(firstKey);
-  }
-
-  keys = Array.from(sessionMap.keys());
+  turn++;
 }
 
-const finalHomeList = [...heroCleanList, ...interleavedRemaining];
-
-console.log(`✅ Generated Home List with ${finalHomeList.length} items (Hero top: ${heroCleanList.length}, Remaining: ${interleavedRemaining.length})`);
+console.log(`✅ Generated Home List (Versión 4: Galería de Autor por Tríadas) with ${finalHomeList.length} items.`);
 
 // Export home list IDs to homeGalleryData.ts
 const fileContent = `// AUTO-GENERATED by scripts/generate-home-order.js — DO NOT EDIT MANUALLY

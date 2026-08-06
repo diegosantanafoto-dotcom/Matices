@@ -39,7 +39,7 @@ export const VIDEO_SECTIONS: VideoSection[] = [
         client: 'Diego Santana Films • Porsche',
         duration: '01:45 min',
         videoUrl: 'https://www.youtube.com/embed/if4Tt5wGylQ',
-        thumbnailUrl: '/images/weddings/boda_6.jpg',
+        thumbnailUrl: '/images/marcas/SAN07748.jpg',
         description: 'Spot comercial car-to-car en carreteras de montaña al atardecer.',
         specs: {
           camera: 'RED V-Raptor 8K VV',
@@ -55,7 +55,7 @@ export const VIDEO_SECTIONS: VideoSection[] = [
         client: 'Diego Santana Films • Abama',
         duration: '02:10 min',
         videoUrl: 'https://www.youtube.com/embed/if4Tt5wGylQ',
-        thumbnailUrl: '/images/weddings/boda_8.jpg',
+        thumbnailUrl: '/images/weddings/01-14.jpg',
         description: 'Recorrido cinemático por espacios de arquitectura terracota y villas.',
         specs: {
           camera: 'Sony FX6 Cinema Line',
@@ -71,7 +71,7 @@ export const VIDEO_SECTIONS: VideoSection[] = [
         client: 'Diego Santana Films • Geneve',
         duration: '01:15 min',
         videoUrl: 'https://www.youtube.com/embed/if4Tt5wGylQ',
-        thumbnailUrl: '/images/retratos/diego_leather.jpg',
+        thumbnailUrl: '/images/marcas/SAN08125.jpg',
         description: 'Macro movimiento cinemático de engranajes y rubíes de zafiro.',
         specs: {
           camera: 'RED Komodo 6K',
@@ -96,7 +96,7 @@ export const VIDEO_SECTIONS: VideoSection[] = [
         client: 'Diego Santana Films • Wedding Cinema',
         duration: '04:30 min',
         videoUrl: 'https://www.youtube.com/embed/if4Tt5wGylQ',
-        thumbnailUrl: '/images/weddings/boda_9.jpg',
+        thumbnailUrl: '/images/weddings/SAN04519.jpg',
         description: 'Documental de boda con óptica fija 50mm f/1.2 y sonido ambiental.',
         specs: {
           camera: 'Sony FX3 Cinema Line',
@@ -112,7 +112,7 @@ export const VIDEO_SECTIONS: VideoSection[] = [
         client: 'Diego Santana Films • Mugaritz',
         duration: '02:00 min',
         videoUrl: 'https://www.youtube.com/embed/if4Tt5wGylQ',
-        thumbnailUrl: '/images/lifestyle/mother_toddler_sunset.jpg',
+        thumbnailUrl: '/images/lifestyle/01-19.jpg',
         description: 'Proceso de elaboración del menú de temporada en brasa viva.',
         specs: {
           camera: 'Sony FX6 Cinema Line',
@@ -128,7 +128,7 @@ export const VIDEO_SECTIONS: VideoSection[] = [
         client: 'Diego Santana Films • Botanical',
         duration: '01:30 min',
         videoUrl: 'https://www.youtube.com/embed/if4Tt5wGylQ',
-        thumbnailUrl: '/images/lifestyle/couple_embrace_beach.jpg',
+        thumbnailUrl: '/images/lifestyle/1-25.jpg',
         description: 'Congelado en cámara lenta de vapores de nitrógeno y botánicos.',
         specs: {
           camera: 'RED V-Raptor 8K',
@@ -138,7 +138,7 @@ export const VIDEO_SECTIONS: VideoSection[] = [
         }
       }
     ]
-  }
+  },
 ];
 
 // BACKWARD COMPATIBILITY FLAT ARRAY

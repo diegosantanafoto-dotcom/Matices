@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Sparkles } from 'lucide-react';
+import { X } from 'lucide-react';
 
 export interface ProjectItem {
   id: string;
@@ -20,10 +20,10 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'Apple Store Fifth Avenue',
     locationCategory: 'Nueva York, Arquitectura',
     date: '16/7/25',
-    imageUrl: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/marcas/SAN07748.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop'
+      '/images/marcas/SAN07748.jpg',
+      '/images/marcas/SAN08167.jpg'
     ],
     client: 'Apple Inc.',
     year: '2025',
@@ -35,12 +35,12 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'Qué divertido es hacer fotos',
     locationCategory: 'Nueva York, Viajes',
     date: '12/7/25',
-    imageUrl: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/lifestyle/01-19.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1200&auto=format&fit=crop'
+      '/images/lifestyle/01-19.jpg',
+      '/images/lifestyle/1-42.jpg'
     ],
-    client: 'Diego Santana Photo • Street Life',
+    client: 'matices.ch • Street Life',
     year: '2025',
     description: 'Serie de calle espontánea explorando el movimiento urbano y las interacciones cotidianas en Manhattan.',
     scope: ['Fotografía Callejera', 'Edición Documental', 'Reportaje']
@@ -50,10 +50,10 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'La tienda de Peak Design',
     locationCategory: 'Nueva York, Comercial',
     date: '12/7/25',
-    imageUrl: 'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/marcas/PIPO-12.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1200&auto=format&fit=crop'
+      '/images/marcas/PIPO-12.jpg',
+      '/images/marcas/1-12.jpg'
     ],
     client: 'Peak Design SoHo',
     year: '2025',
@@ -65,10 +65,10 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'Cae la noche en Nueva York',
     locationCategory: 'Nueva York, Nocturna',
     date: '11/7/25',
-    imageUrl: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/lifestyle/SAN01065.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop'
+      '/images/lifestyle/SAN01065.jpg',
+      '/images/marcas/SAN08167.jpg'
     ],
     client: 'Empire State Observatory',
     year: '2025',
@@ -80,10 +80,10 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'La Cabra SoHo',
     locationCategory: 'Nueva York, Gastronomía',
     date: '16/6/25',
-    imageUrl: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/marcas/1-5.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200&auto=format&fit=crop'
+      '/images/marcas/1-5.jpg',
+      '/images/marcas/1-15.jpg'
     ],
     client: 'La Cabra Coffee',
     year: '2025',
@@ -95,10 +95,10 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'Starbucks Reserve de New York',
     locationCategory: 'Nueva York, Espacios',
     date: '12/6/25',
-    imageUrl: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/marcas/SAN08125.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?q=80&w=1200&auto=format&fit=crop'
+      '/images/marcas/SAN08125.jpg',
+      '/images/marcas/SAN07748.jpg'
     ],
     client: 'Starbucks Reserve Roastery',
     year: '2025',
@@ -110,10 +110,10 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'Nomad Coffee',
     locationCategory: 'Barcelona, Gastronomía',
     date: '9/5/25',
-    imageUrl: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/lifestyle/1-25.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop'
+      '/images/lifestyle/1-25.jpg',
+      '/images/lifestyle/01-19.jpg'
     ],
     client: 'Nomad Coffee Lab',
     year: '2025',
@@ -125,10 +125,10 @@ const PROJECTS_LIST: ProjectItem[] = [
     title: 'La Laguna Gran Hotel',
     locationCategory: 'Tenerife, Hoteles',
     date: '25/3/25',
-    imageUrl: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
+    imageUrl: '/images/weddings/01-14.jpg',
     galleryImages: [
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop'
+      '/images/weddings/01-14.jpg',
+      '/images/weddings/SAN04519.jpg'
     ],
     client: 'La Laguna Gran Hotel 4* Superior',
     year: '2025',
@@ -272,7 +272,6 @@ export const ProjectsShowcase: React.FC<ProjectsShowcaseProps> = ({ onOpenBookin
                 }}
                 className="px-6 py-3 rounded-none bg-[#0F0F12] hover:bg-[#A594F9] text-white font-bold text-xs tracking-wider uppercase transition-colors cursor-default flex items-center space-x-2 shadow-lg"
               >
-                <Sparkles className="w-4 h-4 text-white" />
                 <span>Solicitar Proyecto Similar</span>
               </button>
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { COURSES_DATA } from '../data/coursesData';
-import { GraduationCap, Clock, Monitor, Award, CheckCircle2, ArrowRight, UserCheck, Sparkles } from 'lucide-react';
+import { GraduationCap, Clock, Monitor, Award, CheckCircle2, ArrowRight, UserCheck } from 'lucide-react';
 
 interface CoursesProps {
   onOpenBooking: (courseTitle: string) => void;
@@ -107,7 +107,6 @@ export const Courses: React.FC<CoursesProps> = ({ onOpenBooking }) => {
                   onClick={() => onOpenBooking(`Curso: ${course.title}`)}
                   className="w-full py-3.5 px-4 rounded-xl bg-[#F4F4F5] hover:bg-[#E4C080] text-black font-semibold text-xs tracking-wider uppercase transition-colors flex items-center justify-center space-x-2 cursor-pointer group/btn"
                 >
-                  <Sparkles className="w-4 h-4" />
                   <span>Solicitar Plaza ({course.seatsLeft} Disponibles)</span>
                   <ArrowRight className="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" />
                 </button>

@@ -68,6 +68,7 @@ for (const [folder, cat] of Object.entries(CATEGORIES)) {
     try { statSync(fullPath); } catch { continue; }
 
     const id = safeId(cat.id, basename(file, extname(file)));
+    const { w, h } = getDims(fullPath);
     const ac = aspectClass(w, h, id);
     const imgUrl = `/images/${folder}/${file}`;
 
@@ -123,10 +124,10 @@ const footer = `];\n`;
 
 const items = entries.map(e => `  {
     id: ${JSON.stringify(e.id)},
-    title: 'Diego Santana Photo',
+    title: 'matices.ch',
     category: ${JSON.stringify(e.category)},
     categoryLabel: ${JSON.stringify(e.categoryLabel)},
-    client: 'Diego Santana Photo',
+    client: 'matices.ch',
     year: '2025',
     location: 'Tenerife, Canarias',
     imageUrl: ${JSON.stringify(e.imageUrl)},

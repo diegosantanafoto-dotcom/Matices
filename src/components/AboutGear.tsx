@@ -1,5 +1,5 @@
 import React from 'react';
-import { Camera, Film, Sparkles, Award, Heart, ArrowRight } from 'lucide-react';
+import { Camera, Film, Award, Heart, ArrowRight } from 'lucide-react';
 
 interface AboutGearProps {
   onOpenBooking?: (type?: string) => void;
@@ -79,7 +79,6 @@ export const AboutGear: React.FC<AboutGearProps> = ({ onOpenBooking }) => {
             
             <div className="space-y-3">
               <div className="inline-flex items-center space-x-2 text-xs font-sans uppercase tracking-widest text-[#A594F9] font-bold">
-                <Sparkles className="w-4 h-4" />
                 <span>Sobre Nosotros</span>
               </div>
 

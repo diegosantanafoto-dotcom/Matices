@@ -19,7 +19,7 @@ const BLOG_POSTS: BlogPost[] = [
     category: 'Técnica & Iluminación',
     date: '14 Octubre 2024',
     readTime: '6 min lectura',
-    imageUrl: '/images/retratos/diego_leather.jpg',
+    imageUrl: '/images/marcas/SAN07748.jpg',
     excerpt: 'Cómo esculpir sombras profundas y volumen en emplatados mediante modificadores de luz dura con nido de abeja.',
     content: 'La fotografía gastronómica contemporánea ha evolucionado desde la luz suave y plana hacia composiciones dramáticas en clave baja. El uso de modificadores como el Striplight de 30x120cm combinado con panales de abeja permite direccionar el destello exclusivamente hacia la proteína principal...'
   },
@@ -29,7 +29,7 @@ const BLOG_POSTS: BlogPost[] = [
     category: 'Equipamiento & Gear',
     date: '02 Septiembre 2024',
     readTime: '8 min lectura',
-    imageUrl: '/images/weddings/boda_2.jpg',
+    imageUrl: '/images/marcas/SAN08167.jpg',
     excerpt: 'Análisis del rango dinámico de 15 pasos y la profundidad de color de 16 bits en producciones editoriales impresas.',
     content: 'En la fotografía de alta gama, la resolución no se mide únicamente en megapíxeles sino en la suavidad de las transiciones tonales...'
   },
@@ -39,7 +39,7 @@ const BLOG_POSTS: BlogPost[] = [
     category: 'Workflow & Color',
     date: '18 Agosto 2024',
     readTime: '5 min lectura',
-    imageUrl: '/images/lifestyle/couple_embrace_beach.jpg',
+    imageUrl: '/images/lifestyle/SAN01065.jpg',
     excerpt: 'Optimizando el tiempo de rodaje con pre-visualización en tiempo real y calibración de color Eizo en set.',
     content: 'Disparar conectado a un MacBook Pro M3 Max con monitor calibrado por hardware garantiza que el director de arte y el cliente aprueben cada encuadre...'
   }

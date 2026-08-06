@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ShoppingCart, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | '+INFO';
-  onSelectTab: (tab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | '+INFO') => void;
+  activeTab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO';
+  onSelectTab: (tab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO') => void;
   onSelectCategory?: (category: string) => void;
   onOpenBooking: (type?: string) => void;
 }
@@ -26,11 +26,12 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems: Array<'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | '+INFO'> = [
+  const navItems: Array<'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO'> = [
     'PORTFOLIO',
     'PROYECTOS',
     'VÍDEOS',
     'MERCH',
+    'DIGITAL',
     '+INFO'
   ];
 

@@ -4,23 +4,35 @@ import { HomeGallery } from './components/HomeGallery';
 import { PortfolioGrid } from './components/PortfolioGrid';
 import { VideoGrid } from './components/VideoGrid';
 import { MerchShowcase } from './components/MerchShowcase';
+import { DigitalShowcase } from './components/DigitalShowcase';
 import { BlogGrid } from './components/BlogGrid';
 import { AboutGear } from './components/AboutGear';
 import { ContactDock } from './components/ContactDock';
 import { BriefingModal } from './components/BriefingModal';
+import { LegalModal } from './components/LegalModal';
+import type { LegalTab } from './components/LegalModal';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState<'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | '+INFO'>('HOME');
+  const [activeTab, setActiveTab] = useState<'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO'>('HOME');
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [bookingModalOpen, setBookingModalOpen] = useState<boolean>(false);
   const [bookingInitialType, setBookingInitialType] = useState<string | undefined>(undefined);
+  
+  // LEGAL MODAL STATE (SWISS nLPD & COMPLIANCE)
+  const [legalModalOpen, setLegalModalOpen] = useState<boolean>(false);
+  const [legalInitialTab, setLegalInitialTab] = useState<LegalTab>('IMPRESSUM');
 
   const handleOpenBooking = (type?: string) => {
     setBookingInitialType(type);
     setBookingModalOpen(true);
   };
 
-  const handleSelectTab = (tab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | '+INFO') => {
+  const handleOpenLegal = (tab: LegalTab = 'IMPRESSUM') => {
+    setLegalInitialTab(tab);
+    setLegalModalOpen(true);
+  };
+
+  const handleSelectTab = (tab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO') => {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -65,6 +77,13 @@ export function App() {
         {activeTab === 'MERCH' && (
           <MerchShowcase
             onOpenBooking={handleOpenBooking}
+            onOpenLegal={handleOpenLegal}
+          />
+        )}
+
+        {activeTab === 'DIGITAL' && (
+          <DigitalShowcase
+            onOpenBooking={handleOpenBooking}
           />
         )}
 
@@ -73,16 +92,26 @@ export function App() {
         )}
       </main>
 
-      {/* FOOTER & FLOATING DOCK */}
-      <ContactDock
-        onOpenBooking={handleOpenBooking}
-      />
+      {/* FOOTER & FLOATING DOCK (OCULTO EN PESTAÑA MERCH PARA TERMINAR CON EL FORMULARIO DE PERSONALIZACIÓN) */}
+      {activeTab !== 'MERCH' && (
+        <ContactDock
+          onOpenBooking={handleOpenBooking}
+          onOpenLegal={handleOpenLegal}
+        />
+      )}
 
       {/* INTERACTIVE BRIEFING & BOOKING MODAL */}
       <BriefingModal
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
         initialType={bookingInitialType}
+      />
+
+      {/* SWISS COMPLIANCE LEGAL MODAL (nLPD / FADP, IMPRESSUM & COOKIES) */}
+      <LegalModal
+        isOpen={legalModalOpen}
+        onClose={() => setLegalModalOpen(false)}
+        initialTab={legalInitialTab}
       />
 
     </div>

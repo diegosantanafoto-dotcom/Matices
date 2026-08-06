@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Sparkles, Film } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Film } from 'lucide-react';
 
 interface ContactDockProps {
   onOpenBooking: (type?: string) => void;
+  onOpenLegal?: (tab?: 'IMPRESSUM' | 'PRIVACY' | 'COOKIES') => void;
   lang?: 'ES' | 'EN';
 }
 
-export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking }) => {
+export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenLegal }) => {
   const [quickEmail, setQuickEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -147,9 +148,24 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking }) => {
         <div className="pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-xs font-sans text-gray-400 gap-4">
           <p>© {new Date().getFullYear()} matices. Todos los derechos reservados.</p>
           <div className="flex space-x-6">
-            <a href="#" className="hover:text-[#0F0F12] transition-colors">Aviso Legal</a>
-            <a href="#" className="hover:text-[#0F0F12] transition-colors">Privacidad</a>
-            <a href="#" className="hover:text-[#0F0F12] transition-colors">Cookies</a>
+            <button
+              onClick={() => onOpenLegal && onOpenLegal('IMPRESSUM')}
+              className="hover:text-[#0F0F12] transition-colors cursor-pointer"
+            >
+              Aviso Legal / Impressum
+            </button>
+            <button
+              onClick={() => onOpenLegal && onOpenLegal('PRIVACY')}
+              className="hover:text-[#0F0F12] transition-colors cursor-pointer"
+            >
+              Privacidad (nLPD)
+            </button>
+            <button
+              onClick={() => onOpenLegal && onOpenLegal('COOKIES')}
+              className="hover:text-[#0F0F12] transition-colors cursor-pointer"
+            >
+              Cookies
+            </button>
           </div>
         </div>
 
@@ -173,7 +189,6 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking }) => {
             onClick={() => onOpenBooking('Briefing Comercial')}
             className="font-bold text-[#0F0F12] hover:text-gray-500 uppercase transition-colors cursor-pointer flex items-center space-x-1.5"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#0F0F12]" />
             <span>briefing exprés</span>
           </button>
         </div>

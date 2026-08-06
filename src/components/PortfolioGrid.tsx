@@ -85,6 +85,10 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({
                   src={item.imageUrl}
                   alt={item.title}
                   loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget.closest('.break-inside-avoid');
+                    if (target) (target as HTMLElement).style.display = 'none';
+                  }}
                   className="w-full h-full object-cover transform group-hover:scale-106 transition-transform duration-700"
                 />
                 
