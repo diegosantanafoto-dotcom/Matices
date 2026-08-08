@@ -54,7 +54,7 @@ export const VideoGrid: React.FC<VideoGridProps> = () => {
                       </div>
 
                       {/* CATEGORY GLASS BADGE IN TOP RIGHT CORNER INSIDE THUMBNAIL */}
-                      <div className="absolute top-3 right-3 bg-black/75 backdrop-blur-md px-2.5 py-1 rounded-none text-[10px] font-sans text-white uppercase tracking-widest font-semibold border-0 select-none">
+                      <div className="absolute top-3 right-3 z-10 bg-black/80 backdrop-blur-md px-3 py-1 rounded-none text-[11px] font-sans text-white uppercase tracking-widest font-extrabold border border-white/20 shadow-md select-none">
                         <span>{video.category}</span>
                       </div>
                     </div>

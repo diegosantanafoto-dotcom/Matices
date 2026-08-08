@@ -39,7 +39,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
               Información Legal & Privacidad
             </h2>
             <p className="text-xs text-gray-500 font-sans">
-              matices.ch • Zúrich, Suiza & Tenerife, España
+              matices.ch • St. Gallen, Suiza & Cobertura Internacional
             </p>
           </div>
 
@@ -106,9 +106,9 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
                 </p>
                 <div className="mt-3 p-4 bg-gray-50 border border-gray-100 space-y-1 font-mono text-xs text-[#0F0F12]">
                   <p><strong>Titular del dominio y marca:</strong> matices.ch (Diego Santana Visual Studio)</p>
-                  <p><strong>Sede Comercial:</strong> Zúrich, Suiza / Tenerife, Islas Canarias (España)</p>
-                  <p><strong>Correo electrónico de contacto:</strong> info@matices.ch</p>
-                  <p><strong>Teléfonos de contacto:</strong> +41 44 200 11 00 (Suiza) / +34 922 845 921 (España)</p>
+                  <p><strong>Sede Comercial:</strong> St. Gallen, Suiza / Cobertura Internacional</p>
+                  <p><strong>Correo electrónico de contacto:</strong> hallomatices@gmail.com</p>
+                  <p><strong>Teléfono / WhatsApp:</strong> +41 76 215 52 03</p>
                   <p><strong>Actividad:</strong> Fotografía comercial, producción audiovisual, dirección artística y personalización de mercancía corporativa.</p>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
                   1. Responsable del Tratamiento de Datos
                 </h3>
                 <p>
-                  El responsable del tratamiento de los datos personales recogidos en este sitio web es <strong>matices</strong> (contacto principal: <a href="mailto:info@matices.ch" className="text-[#A594F9] font-semibold underline">info@matices.ch</a>). Tratamos sus datos con confidencialidad y respetando íntegramente las exigencias del Derecho suizo de protección de datos (nLPD) y el Reglamento General de Protección de Datos de la UE (RGPD 2016/679).
+                  El responsable del tratamiento de los datos personales recogidos en este sitio web es <strong>matices</strong> (contacto principal: <a href="mailto:hallomatices@gmail.com" className="text-[#A594F9] font-semibold underline">hallomatices@gmail.com</a>). Tratamos sus datos con confidencialidad y respetando íntegramente las exigencias del Derecho suizo de protección de datos (nLPD) y el Reglamento General de Protección de Datos de la UE (RGPD 2016/679).
                 </p>
               </div>
 
@@ -176,7 +176,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
                   4. Derechos de los Interesados (Art. 25-29 nLPD / Art. 15-22 RGPD)
                 </h3>
                 <p>
-                  Usted tiene derecho en todo momento a solicitar información gratuita sobre sus datos personales almacenados, su origen, destinatarios y la finalidad del tratamiento, así como el derecho de rectificación, bloqueo o supresión de dichos datos. Para ejercitar estos derechos, simplemente envíe un correo electrónico a <a href="mailto:info@matices.ch" className="text-[#A594F9] font-semibold underline">info@matices.ch</a>.
+                  Usted tiene derecho en todo momento a solicitar información gratuita sobre sus datos personales almacenados, su origen, destinatarios y la finalidad del tratamiento, así como el derecho de rectificación, bloqueo o supresión de dichos datos. Para ejercitar estos derechos, simplemente envíe un correo electrónico a <a href="mailto:hallomatices@gmail.com" className="text-[#A594F9] font-semibold underline">hallomatices@gmail.com</a>.
                 </p>
               </div>
             </div>
@@ -227,7 +227,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
         {/* FOOTER ACTION */}
         <div className="p-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between shrink-0">
           <span className="text-xs text-gray-500 font-sans">
-            Última actualización legal: Zúrich, Suiza (2025 / Ley Federal nLPD)
+            Última actualización legal: St. Gallen, Suiza (2025 / Ley Federal nLPD)
           </span>
 
           <button

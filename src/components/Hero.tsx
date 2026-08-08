@@ -31,8 +31,8 @@ export const Hero: React.FC<HeroProps> = ({ onSelectCategoryFilter, onOpenBookin
               </span>
               <span className="text-[#F4F4F5]">
                 {lang === 'ES' 
-                  ? 'Disponible para proyectos en Canarias & Internacional' 
-                  : 'Available for projects in Canary Islands & Worldwide'}
+                  ? 'Disponible para proyectos en Suiza & Internacional' 
+                  : 'Available for projects in Switzerland & Worldwide'}
               </span>
               <span className="text-[#E4C080] font-bold">2024/2025</span>
             </div>

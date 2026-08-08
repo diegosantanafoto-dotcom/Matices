@@ -123,7 +123,7 @@ const PROJECTS_LIST: ProjectItem[] = [
   {
     id: 'p-8',
     title: 'La Laguna Gran Hotel',
-    locationCategory: 'Tenerife, Hoteles',
+    locationCategory: 'Suiza, Hoteles',
     date: '25/3/25',
     imageUrl: '/images/weddings/01-14.jpg',
     galleryImages: [
