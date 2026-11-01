@@ -18,9 +18,9 @@ export const AboutGear: React.FC<AboutGearProps> = ({ onOpenBooking }) => {
             
             <div className="aspect-[4/5] w-full overflow-hidden rounded-none shadow-xl bg-gray-200 relative border-0">
               <img
-                src="/images/retratos/01.jpg"
+                src="/images/team/diego-y-jessi.jpg"
                 alt="Diego & Jessi — matices"
-                className="w-full h-full object-cover rounded-none hover:scale-105 transition-all duration-700 select-none cursor-default"
+                className="w-full h-full object-cover object-top rounded-none hover:scale-105 transition-all duration-700 select-none cursor-default"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
                 <span className="text-[10px] font-sans font-bold uppercase tracking-widest text-[#A594F9]">
