@@ -25,11 +25,21 @@ jobs:
       - name: 🔨 Build project
         run: npm run build
 
-      - name: 📁 Sync files via FTP to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/
-          server-dir: ./public_html/
+      - name: 📦 Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: 📁 Deploy via FTP to Hostinger
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
+        run: |
+          TARGET_DIR="${FTP_SERVER_DIR:-./public_html/}"
+          lftp -c "
+            set ftp:ssl-allow no;
+            set ssl:verify-certificate no;
+            open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_SERVER;
+            mirror --reverse --delete --verbose ./dist/ $TARGET_DIR;
+            bye
+          "
