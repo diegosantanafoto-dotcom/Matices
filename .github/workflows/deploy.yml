@@ -41,14 +41,22 @@ jobs:
             set ssl:verify-certificate no;
             open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_SERVER;
             
-            # 1. Despliegue en subdominio hallo.matices.ch (con tienda/merch disponible)
-            echo '=== Sincronizando subdominio hallo.matices.ch ===';
+            # 1. Despliegue en subdominio hallo.matices.ch (ambas rutas relativas para máxima compatibilidad)
+            echo '=== Sincronizando subdominio hallo.matices.ch en ./hallomatices/ ===';
+            mkdir -p ./hallomatices/;
+            rm ./hallomatices/default.php;
+            mirror --reverse --delete --verbose ./dist/ ./hallomatices/;
+
+            echo '=== Sincronizando subdominio hallo.matices.ch en ./public_html/hallomatices/ ===';
             mkdir -p ./public_html/hallomatices/;
             rm ./public_html/hallomatices/default.php;
             mirror --reverse --delete --verbose ./dist/ ./public_html/hallomatices/;
 
-            # 2. Despliegue en dominio general matices.ch (sin pagina de MERCH, preservando subdominio)
-            echo '=== Sincronizando dominio general matices.ch ===';
+            # 2. Despliegue en dominio general matices.ch (ambas rutas relativas preservando subdominios)
+            echo '=== Sincronizando dominio general matices.ch en ./ ===';
+            mirror --reverse --delete -X 'hallomatices*' -X '.well-known*' -X 'public_html*' --verbose ./dist/ ./;
+
+            echo '=== Sincronizando dominio general matices.ch en ./public_html/ ===';
             mirror --reverse --delete -X 'hallomatices*' -X '.well-known*' --verbose ./dist/ ./public_html/;
             
             bye
