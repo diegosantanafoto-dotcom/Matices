@@ -43,6 +43,7 @@ jobs:
             # 1. Despliegue en subdominio hallo.matices.ch (con tienda/merch disponible)
             echo '=== Sincronizando subdominio hallo.matices.ch ===';
             mkdir -p ./public_html/hallomatices/;
+            rm -f ./public_html/hallomatices/default.php ./public_html/hallomatices/index.php;
             mirror --reverse --delete --verbose ./dist/ ./public_html/hallomatices/;
 
             # 2. Despliegue en dominio general matices.ch (sin pagina de MERCH, preservando subdominio)
