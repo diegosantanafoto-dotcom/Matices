@@ -36,6 +36,7 @@ jobs:
           FTP_SERVER_DIR: ${{ secrets.FTP_SERVER_DIR }}
         run: |
           lftp -c "
+            set cmd:fail-exit no;
             set ftp:ssl-allow no;
             set ssl:verify-certificate no;
             open -u $FTP_USERNAME,$FTP_PASSWORD $FTP_SERVER;
@@ -43,7 +44,7 @@ jobs:
             # 1. Despliegue en subdominio hallo.matices.ch (con tienda/merch disponible)
             echo '=== Sincronizando subdominio hallo.matices.ch ===';
             mkdir -p ./public_html/hallomatices/;
-            rm -f ./public_html/hallomatices/default.php ./public_html/hallomatices/index.php;
+            rm ./public_html/hallomatices/default.php;
             mirror --reverse --delete --verbose ./dist/ ./public_html/hallomatices/;
 
             # 2. Despliegue en dominio general matices.ch (sin pagina de MERCH, preservando subdominio)
