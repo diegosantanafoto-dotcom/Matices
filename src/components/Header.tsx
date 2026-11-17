@@ -26,11 +26,14 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const isMainDomain = typeof window !== 'undefined' && 
+    (window.location.hostname === 'matices.ch' || window.location.hostname === 'www.matices.ch');
+
   const navItems: Array<'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO'> = [
     'PORTFOLIO',
     'PROYECTOS',
     'VÍDEOS',
-    'MERCH',
+    ...(isMainDomain ? [] : (['MERCH'] as const)),
     'DIGITAL',
     '+INFO'
   ];
@@ -186,17 +189,19 @@ export const Header: React.FC<HeaderProps> = ({
             </svg>
           </a>
 
-          {/* SHOPPING CART ICON */}
-          <button
-            onClick={() => onOpenBooking('Presets / Licencias')}
-            className="text-[#111111] hover:text-[#A594F9] transition-colors p-1 relative cursor-pointer"
-            title="Carrito de Compras / Presets"
-          >
-            <ShoppingCart className="w-4 h-4" />
-            <span className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-[#111111] text-white text-[8px] font-bold rounded-full flex items-center justify-center">
-              0
-            </span>
-          </button>
+          {/* SHOPPING CART ICON (Solo en subdominio / catálogo merch) */}
+          {!isMainDomain && (
+            <button
+              onClick={() => onOpenBooking('Presets / Licencias')}
+              className="text-[#111111] hover:text-[#A594F9] transition-colors p-1 relative cursor-pointer"
+              title="Carrito de Compras / Presets"
+            >
+              <ShoppingCart className="w-4 h-4" />
+              <span className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-[#111111] text-white text-[8px] font-bold rounded-full flex items-center justify-center">
+                0
+              </span>
+            </button>
+          )}
 
         </div>
 

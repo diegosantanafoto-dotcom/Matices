@@ -13,6 +13,9 @@ import { LegalModal } from './components/LegalModal';
 import type { LegalTab } from './components/LegalModal';
 
 export function App() {
+  const isMainDomain = typeof window !== 'undefined' && 
+    (window.location.hostname === 'matices.ch' || window.location.hostname === 'www.matices.ch');
+
   const [activeTab, setActiveTab] = useState<'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO'>('HOME');
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
   const [bookingModalOpen, setBookingModalOpen] = useState<boolean>(false);
@@ -33,6 +36,10 @@ export function App() {
   };
 
   const handleSelectTab = (tab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO') => {
+    if (tab === 'MERCH' && isMainDomain) {
+      setActiveTab('HOME');
+      return;
+    }
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -74,7 +81,7 @@ export function App() {
           />
         )}
 
-        {activeTab === 'MERCH' && (
+        {activeTab === 'MERCH' && !isMainDomain && (
           <MerchShowcase
             onOpenBooking={handleOpenBooking}
             onOpenLegal={handleOpenLegal}
@@ -93,7 +100,7 @@ export function App() {
       </main>
 
       {/* FOOTER & FLOATING DOCK (OCULTO EN PESTAÑA MERCH PARA TERMINAR CON EL FORMULARIO DE PERSONALIZACIÓN) */}
-      {activeTab !== 'MERCH' && (
+      {(activeTab !== 'MERCH' || isMainDomain) && (
         <ContactDock
           onOpenBooking={handleOpenBooking}
           onOpenLegal={handleOpenLegal}
