@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, ShieldCheck, FileText, Cookie, Lock } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export type LegalTab = 'IMPRESSUM' | 'PRIVACY' | 'COOKIES';
 
@@ -10,7 +11,10 @@ interface LegalModalProps {
 }
 
 export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initialTab = 'IMPRESSUM' }) => {
+  const { lang, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<LegalTab>(initialTab);
+
+  const isDe = lang === 'DE';
 
   // Sync initial tab when modal opens
   React.useEffect(() => {
@@ -33,20 +37,20 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
           <div className="space-y-1">
             <div className="flex items-center space-x-2 text-xs font-sans text-[#A594F9] font-bold uppercase tracking-widest">
               <ShieldCheck className="w-4 h-4 text-[#A594F9]" />
-              <span>Conformidad Legal Suiza (nLPD / FADP & RGPD)</span>
+              <span>{t('legal.badge')}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold font-outfit text-[#0F0F12]">
-              Información Legal & Privacidad
+              {t('legal.title')}
             </h2>
             <p className="text-xs text-gray-500 font-sans">
-              matices.ch • St. Gallen, Suiza & Cobertura Internacional
+              {t('legal.subtitle')}
             </p>
           </div>
 
           <button
             onClick={onClose}
             className="p-2.5 bg-gray-100 hover:bg-[#A594F9] text-[#0F0F12] hover:text-white transition-colors cursor-pointer rounded-none"
-            aria-label="Cerrar ventana legal"
+            aria-label={t('modal.close')}
           >
             <X className="w-5 h-5" />
           </button>
@@ -63,7 +67,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
             }`}
           >
             <FileText className="w-4 h-4" />
-            <span>Aviso Legal / Impressum</span>
+            <span>{t('legal.impressum')}</span>
           </button>
 
           <button
@@ -75,7 +79,7 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
             }`}
           >
             <Lock className="w-4 h-4" />
-            <span>Política de Privacidad (nLPD)</span>
+            <span>{t('legal.privacy')}</span>
           </button>
 
           <button
@@ -87,157 +91,234 @@ export const LegalModal: React.FC<LegalModalProps> = ({ isOpen, onClose, initial
             }`}
           >
             <Cookie className="w-4 h-4" />
-            <span>Política de Cookies</span>
+            <span>{t('legal.cookies')}</span>
           </button>
         </div>
 
         {/* TAB CONTENT BODY */}
         <div className="p-6 sm:p-10 space-y-6 overflow-y-auto font-sans text-xs sm:text-sm text-[#444449] leading-relaxed font-light">
           
-          {/* TAB 1: IMPRESSUM / AVISO LEGAL */}
+          {/* TAB 1: IMPRESSUM */}
           {activeTab === 'IMPRESSUM' && (
             <div className="space-y-6 animate-in fade-in duration-150">
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  1. Datos Identificativos (Impressum - Suiza)
-                </h3>
-                <p>
-                  En cumplimiento del deber de información establecido en la legislación suiza (Código de Obligaciones de Suiza - CO / OR) y las directivas internacionales de comercio electrónico, se facilitan los siguientes datos identificativos del titular de la web:
-                </p>
-                <div className="mt-3 p-4 bg-gray-50 border border-gray-100 space-y-1 font-mono text-xs text-[#0F0F12]">
-                  <p><strong>Titular del dominio y marca:</strong> matices.ch (Diego Santana Visual Studio)</p>
-                  <p><strong>Sede Comercial:</strong> St. Gallen, Suiza / Cobertura Internacional</p>
-                  <p><strong>Correo electrónico de contacto:</strong> hallomatices@gmail.com</p>
-                  <p><strong>Teléfono / WhatsApp:</strong> +41 76 215 52 03</p>
-                  <p><strong>Actividad:</strong> Fotografía comercial, producción audiovisual, dirección artística y personalización de mercancía corporativa.</p>
-                </div>
-              </div>
+              {isDe ? (
+                <>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      1. Angaben gemäß Schweizer Recht (Impressum)
+                    </h3>
+                    <p>
+                      Gemäß den Bestimmungen des Schweizerischen Obligationenrechts (OR) und den geltenden Vorschriften für den elektronischen Geschäftsverkehr werden folgende Angaben zum Betreiber dieser Website gemacht:
+                    </p>
+                    <div className="mt-3 p-4 bg-gray-50 border border-gray-100 space-y-1 font-mono text-xs text-[#0F0F12]">
+                      <p><strong>Inhaber der Domain & Marke:</strong> matices.ch (Diego Santana Visual Studio)</p>
+                      <p><strong>Standort / Sitz:</strong> St. Gallen, Schweiz / Weltweite Einsätze</p>
+                      <p><strong>Kontakt-E-Mail:</strong> hallomatices@gmail.com</p>
+                      <p><strong>Telefon / WhatsApp:</strong> +41 76 215 52 03</p>
+                      <p><strong>Tätigkeitsfeld:</strong> Kommerzielle Fotografie, audiovisuelle Filmproduktion, Art Direction und digitale Lösungen.</p>
+                    </div>
+                  </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  2. Derechos de Propiedad Intelectual e Industrial
-                </h3>
-                <p>
-                  Todos los contenidos expuestos en <strong>matices.ch</strong> —incluyendo fotografías, vídeos, piezas audiovisuales, diseños gráficos, maquetas, textos, logotipos y código fuente— son propiedad exclusiva del titular o cuentan con la correspondiente licencia de uso. Queda estrictamente prohibida la reproducción, distribución, comunicación pública o transformación de cualquier material sin la autorización previa por escrito del autor.
-                </p>
-              </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      2. Urheberrechte & Geistiges Eigentum
+                    </h3>
+                    <p>
+                      Die Urheber- und alle anderen Rechte an Inhalten, Bildern, Fotos, Videos, Grafiken oder anderen Dateien auf der Website <strong>matices.ch</strong> gehören ausschließlich dem Betreiber oder den speziell genannten Rechtsinhabern. Für die Reproduktion jeglicher Elemente ist die schriftliche Zustimmung der Urheberrechtsträger im Voraus einzuholen.
+                    </p>
+                  </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  3. Exención de Responsabilidad de Enlaces
-                </h3>
-                <p>
-                  Este sitio web puede contener enlaces a sitios web de terceros. <strong>matices</strong> no ejerce ningún control sobre dichos sitios y declina toda responsabilidad por los contenidos, políticas de privacidad o prácticas de servicios externos.
-                </p>
-              </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      3. Haftungsausschluss für Links
+                    </h3>
+                    <p>
+                      Verweise und Links auf Webseiten Dritter liegen außerhalb unseres Verantwortungsbereichs. Es wird jegliche Verantwortung für solche Webseiten abgelehnt. Der Zugriff und die Nutzung solcher Webseiten erfolgen auf eigene Gefahr des Nutzers.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      1. Legal Entity & Identification (Impressum - Switzerland)
+                    </h3>
+                    <p>
+                      In compliance with the Swiss Code of Obligations (OR) and international e-commerce guidelines, the following identifying details of the website owner are provided:
+                    </p>
+                    <div className="mt-3 p-4 bg-gray-50 border border-gray-100 space-y-1 font-mono text-xs text-[#0F0F12]">
+                      <p><strong>Domain & Brand Holder:</strong> matices.ch (Diego Santana Visual Studio)</p>
+                      <p><strong>Registered Base:</strong> St. Gallen, Switzerland / Worldwide Coverage</p>
+                      <p><strong>Contact Email:</strong> hallomatices@gmail.com</p>
+                      <p><strong>Phone / WhatsApp:</strong> +41 76 215 52 03</p>
+                      <p><strong>Activity:</strong> Commercial photography, cinema audiovisual production, art direction, and digital solutions.</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      2. Intellectual Property Rights
+                    </h3>
+                    <p>
+                      All content published on <strong>matices.ch</strong> — including photographs, video productions, graphic designs, texts, logos, and source code — is the exclusive property of the owner or licensed third parties. Any unauthorized reproduction, distribution, or transformation is strictly prohibited without prior written consent.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      3. Disclaimer for External Links
+                    </h3>
+                    <p>
+                      This website may contain links to third-party websites. <strong>matices</strong> exercises no control over these websites and assumes no liability for their content, privacy policies, or operational standards.
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
-          {/* TAB 2: POLITICA DE PRIVACIDAD SUIZA (nLPD / FADP & RGPD) */}
+          {/* TAB 2: PRIVACY POLICY */}
           {activeTab === 'PRIVACY' && (
             <div className="space-y-6 animate-in fade-in duration-150">
               <div className="p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-medium flex items-center space-x-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Cumplimiento estricto de la nueva Ley Federal de Protección de Datos de Suiza (nLPD / FADP, sep 2023) y RGPD/GDPR de la UE.</span>
+                <span>
+                  {isDe
+                    ? 'Konformität mit dem Schweizer Datenschutzgesetz (DSG) und der EU-DSGVO.'
+                    : 'Compliance with the Swiss Federal Act on Data Protection (FADP / nLPD) and EU GDPR.'}
+                </span>
               </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  1. Responsable del Tratamiento de Datos
-                </h3>
-                <p>
-                  El responsable del tratamiento de los datos personales recogidos en este sitio web es <strong>matices</strong> (contacto principal: <a href="mailto:hallomatices@gmail.com" className="text-[#A594F9] font-semibold underline">hallomatices@gmail.com</a>). Tratamos sus datos con confidencialidad y respetando íntegramente las exigencias del Derecho suizo de protección de datos (nLPD) y el Reglamento General de Protección de Datos de la UE (RGPD 2016/679).
-                </p>
-              </div>
+              {isDe ? (
+                <>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      1. Datenschutzübersicht
+                    </h3>
+                    <p>
+                      Gestützt auf Artikel 13 der Schweizerischen Bundesverfassung und die datenschutzrechtlichen Bestimmungen des Bundes (Datenschutzgesetz, DSG) hat jede Person Anspruch auf Schutz ihrer Privatsphäre sowie auf Schutz vor Missbrauch ihrer persönlichen Daten. Wir halten diese Bestimmungen strikt ein.
+                    </p>
+                  </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  2. Datos Personales Recopilados y Finalidades
-                </h3>
-                <p className="mb-2">Recopilamos únicamente los datos necesarios para prestar nuestros servicios profesionales:</p>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Formularios de Briefing & Cotización de Personalización:</strong> Recopilamos nombre, empresa, dirección de email, teléfono, ciudad e información sobre el proyecto para elaborar presupuestos y maquetas digitales 3D.</li>
-                  <li><strong>Suscripción a Boletín Editorial:</strong> Si decide suscribirse a nuestro boletín, utilizaremos su dirección de correo exclusivamente para enviarle novedades visuales y editoriales. Puede darse de baja en cualquier momento.</li>
-                  <li><strong>Datos de Navegación Técnica:</strong> Al visitar la web, nuestros servidores registran automáticamente datos anónimos de servidor (IP anonimizada, tipo de navegador, sistema operativo y sello de fecha/hora) para garantizar el funcionamiento seguro e ininterrumpido.</li>
-                </ul>
-              </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      2. Erhebung & Verarbeitung personenbezogener Daten
+                    </h3>
+                    <p>
+                      Persönliche Daten werden streng vertraulich behandelt und weder an Dritte verkauft noch weitergegeben. Beim Ausfüllen von Formularen (Buchung, Kontakt, Newsletter) erheben wir nur diejenigen Daten, die für die Bearbeitung Ihrer Anfrage oder Projektrealisierung erforderlich sind (z.B. Name, E-Mail-Adresse, Telefonnummer).
+                    </p>
+                  </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  3. Conservación y Seguridad de Datos
-                </h3>
-                <p>
-                  Los datos personales se conservan durante el tiempo estrictamente necesario para la tramitación de su solicitud o el cumplimiento de obligaciones legales de conservación en Suiza (hasta 10 años conforme a la normativa mercantil suiza CO 957a). Empleamos cifrado SSL/TLS de 256 bits y servidores protegidos con cortafuegos de alta seguridad.
-                </p>
-              </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      3. Ihre Rechte (Auskunft, Berichtigung & Löschung)
+                    </h3>
+                    <p>
+                      Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger sowie den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Kontaktieren Sie uns hierzu unter <strong>hallomatices@gmail.com</strong>.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      1. Privacy Overview
+                    </h3>
+                    <p>
+                      Based on Article 13 of the Swiss Federal Constitution and the provisions of Swiss federal data protection legislation (Data Protection Act, FADP/DSG), every person has the right to privacy and protection against misuse of personal data. We strictly adhere to these principles.
+                    </p>
+                  </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  4. Derechos de los Interesados (Art. 25-29 nLPD / Art. 15-22 RGPD)
-                </h3>
-                <p>
-                  Usted tiene derecho en todo momento a solicitar información gratuita sobre sus datos personales almacenados, su origen, destinatarios y la finalidad del tratamiento, así como el derecho de rectificación, bloqueo o supresión de dichos datos. Para ejercitar estos derechos, simplemente envíe un correo electrónico a <a href="mailto:hallomatices@gmail.com" className="text-[#A594F9] font-semibold underline">hallomatices@gmail.com</a>.
-                </p>
-              </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      2. Collection & Processing of Personal Data
+                    </h3>
+                    <p>
+                      Personal data is treated strictly confidentially and will never be sold or transferred to third parties. When completing inquiry forms (briefing, contact, newsletter), we collect only the information necessary to fulfill your request or produce your visual project (name, email address, phone number).
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      3. Your Rights (Access, Correction & Deletion)
+                    </h3>
+                    <p>
+                      You have the right to request free information at any time about your stored personal data, its origin, recipient, and the purpose of data processing, as well as the right to correction or deletion of such data. Contact us at <strong>hallomatices@gmail.com</strong>.
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
-          {/* TAB 3: POLITICA DE COOKIES */}
+          {/* TAB 3: COOKIES */}
           {activeTab === 'COOKIES' && (
             <div className="space-y-6 animate-in fade-in duration-150">
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  1. ¿Qué son las Cookies?
-                </h3>
-                <p>
-                  Una cookie es un pequeño archivo de texto almacenado en su ordenador o dispositivo móvil por su navegador web cuando visita <strong>matices.ch</strong>. Sirven para recordar sus preferencias de sesión y asegurar el rendimiento fluido de la experiencia visual.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  2. Tipos de Cookies Utilizadas
-                </h3>
-                <div className="space-y-3">
-                  <div className="p-3.5 bg-gray-50 border border-gray-100 space-y-1">
-                    <span className="font-bold text-[#0F0F12] block">Cookies Necesarias / Técnicas (Siempre Activas):</span>
-                    <p className="text-xs">Imprescindibles para permitir la navegación por las secciones, la reproducción de vídeo y el envío seguro de formularios de briefing. No requieren consentimiento según la legislación suiza (nLPD).</p>
+              {isDe ? (
+                <>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      1. Was sind Cookies?
+                    </h3>
+                    <p>
+                      Cookies sind kleine Textdateien, die beim Besuch von <strong>matices.ch</strong> auf Ihrem Endgerät abgelegt werden. Sie dienen dazu, die Benutzererfahrung reibungslos, flüssig und sicher zu gestalten sowie Ihre bevorzugte Spracheinstellung zu speichern.
+                    </p>
                   </div>
 
-                  <div className="p-3.5 bg-gray-50 border border-gray-100 space-y-1">
-                    <span className="font-bold text-[#0F0F12] block">Cookies de Preferencias / Rendimiento:</span>
-                    <p className="text-xs">Permiten recordar ajustes seleccionados (como filtros de portfolio) para optimizar la velocidad de respuesta.</p>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      2. Verwendete Cookies
+                    </h3>
+                    <div className="space-y-2 pl-4 border-l-2 border-gray-200">
+                      <p><strong>Notwendige funktionale Cookies:</strong> Ermöglichen die grundlegende Navigation, Sprachauswahl (DE/EN) und Darstellung visueller Inhalte.</p>
+                      <p><strong>Performance & Medien:</strong> Stellen das flüssige Laden und Abspielen eingebetteter Videoformate (z.B. Vimeo/YouTube) sicher.</p>
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              <div>
-                <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
-                  3. Cómo Desactivar o Gestionar las Cookies
-                </h3>
-                <p>
-                  Usted puede configurar su navegador web para bloquear o recibir alertas sobre la presencia de cookies. Si decide desactivar las cookies esenciales, es posible que algunas funcionalidades interactivas no respondan correctamente. Puede consultar las instrucciones en las páginas de ayuda oficiales de Safari, Google Chrome, Mozilla Firefox o Microsoft Edge.
-                </p>
-              </div>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      3. Verwaltung von Cookies
+                    </h3>
+                    <p>
+                      Sie können Ihren Browser so einstellen, dass Sie über das Setzen von Cookies informiert werden und Cookies nur im Einzelfall erlauben oder generell ausschließen.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      1. What are Cookies?
+                    </h3>
+                    <p>
+                      Cookies are small text files stored on your device when you visit <strong>matices.ch</strong>. They serve to ensure a smooth, fluid, and secure user experience, as well as preserving your preferred language settings.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      2. Types of Cookies Used
+                    </h3>
+                    <div className="space-y-2 pl-4 border-l-2 border-gray-200">
+                      <p><strong>Essential Functional Cookies:</strong> Enable core navigation, language selection (DE/EN), and high-resolution visual display.</p>
+                      <p><strong>Performance & Media:</strong> Ensure smooth streaming and playback of embedded cinema showreel players (e.g. Vimeo/YouTube).</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-base font-bold text-[#0F0F12] font-outfit uppercase tracking-wider mb-2">
+                      3. Managing Cookies
+                    </h3>
+                    <p>
+                      You can configure your browser to inform you about the setting of cookies and choose to accept or decline cookies on an individual or universal basis.
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
         </div>
-
-        {/* FOOTER ACTION */}
-        <div className="p-6 bg-gray-50 border-t border-gray-100 flex items-center justify-between shrink-0">
-          <span className="text-xs text-gray-500 font-sans">
-            Última actualización legal: St. Gallen, Suiza (2025 / Ley Federal nLPD)
-          </span>
-
-          <button
-            onClick={onClose}
-            className="px-6 py-2.5 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer rounded-none font-outfit shadow-md"
-          >
-            Entendido & Entendido
-          </button>
-        </div>
-
       </div>
     </div>
   );

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Film } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface ContactDockProps {
   onOpenBooking: (type?: string) => void;
   onOpenLegal?: (tab?: 'IMPRESSUM' | 'PRIVACY' | 'COOKIES') => void;
-  lang?: 'ES' | 'EN';
 }
 
 export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenLegal }) => {
+  const { lang, t } = useLanguage();
   const [quickEmail, setQuickEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+
+  const isDe = lang === 'DE';
 
   const handleQuickSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,11 +31,11 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenL
         <div className="max-w-4xl mx-auto text-center space-y-8">
           
           <h2 className="text-3xl sm:text-6xl font-extrabold text-[#0F0F12] leading-tight tracking-tight">
-            ¿Tienes un proyecto visual <span className="font-editorial-italic font-normal">en mente?</span>
+            {t('contact.heading')} <span className="font-editorial-italic font-normal">{t('contact.headingItalic')}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#666670] font-normal leading-relaxed max-w-2xl mx-auto">
-            Estamos disponibles para dirección artística, producciones integrales en Suiza y desplazamientos internacionales.
+            {t('contact.description')}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-8 font-sans text-xs font-medium pt-4">
@@ -60,7 +63,7 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenL
 
             <div className="flex items-center space-x-2 text-gray-500 text-sm">
               <MapPin className="w-4 h-4 text-gray-400" />
-              <span>Suiza & Internacional</span>
+              <span>{t('contact.location')}</span>
             </div>
           </div>
 
@@ -73,20 +76,20 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenL
                   required
                   value={quickEmail}
                   onChange={(e) => setQuickEmail(e.target.value)}
-                  placeholder="Suscríbete a nuestro boletín editorial..."
+                  placeholder={t('contact.newsletterPlaceholder')}
                   className="flex-1 bg-transparent text-xs font-sans font-medium text-[#0F0F12] placeholder-gray-400 outline-none"
                 />
                 <button
                   type="submit"
                   className="text-xs font-sans font-bold text-[#0F0F12] hover:text-gray-500 uppercase tracking-widest pl-2 cursor-pointer flex items-center space-x-1"
                 >
-                  <span>Enviar</span>
+                  <span>{t('contact.newsletterButton')}</span>
                   <Send className="w-3.5 h-3.5" />
                 </button>
               </form>
             ) : (
               <p className="text-xs font-sans text-[#0F0F12] font-bold">
-                ✓ ¡Suscrito con éxito al boletín de matices!
+                ✓ {t('contact.newsletterSuccess')}
               </p>
             )}
           </div>
@@ -96,7 +99,7 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenL
         {/* CENTERED MINIMAL SOCIAL ICONS ONLY */}
         <div className="pt-12 border-t border-gray-100 flex flex-col items-center space-y-4 font-sans">
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
-            Sigue Nuestro Trabajo
+            {isDe ? 'Folgen Sie unserer Arbeit' : 'Follow Our Work'}
           </span>
 
           <div className="flex items-center space-x-8 text-[#0F0F12]">
@@ -160,25 +163,25 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenL
 
         {/* BOTTOM COPYRIGHT */}
         <div className="pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between text-xs font-sans text-gray-400 gap-4">
-          <p>© {new Date().getFullYear()} matices. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} matices. {t('contact.rights')}</p>
           <div className="flex space-x-6">
             <button
               onClick={() => onOpenLegal && onOpenLegal('IMPRESSUM')}
               className="hover:text-[#0F0F12] transition-colors cursor-pointer"
             >
-              Aviso Legal / Impressum
+              {t('legal.impressum')}
             </button>
             <button
               onClick={() => onOpenLegal && onOpenLegal('PRIVACY')}
               className="hover:text-[#0F0F12] transition-colors cursor-pointer"
             >
-              Privacidad (nLPD)
+              {t('legal.privacy')}
             </button>
             <button
               onClick={() => onOpenLegal && onOpenLegal('COOKIES')}
               className="hover:text-[#0F0F12] transition-colors cursor-pointer"
             >
-              Cookies
+              {t('legal.cookies')}
             </button>
           </div>
         </div>
@@ -190,20 +193,20 @@ export const ContactDock: React.FC<ContactDockProps> = ({ onOpenBooking, onOpenL
         <div className="bg-white/95 backdrop-blur-md px-6 py-2.5 border border-gray-200 shadow-xl rounded-full flex items-center space-x-6 text-xs font-sans">
           
           <button
-            onClick={() => onOpenBooking('Inquiry')}
+            onClick={() => onOpenBooking(isDe ? 'Projekt reservieren' : 'Book Project')}
             className="flex items-center space-x-2 font-bold text-[#0F0F12] hover:text-gray-500 transition-colors cursor-pointer"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>reservar proyecto</span>
+            <span>{isDe ? 'Projekt anfragen' : 'Book Project'}</span>
           </button>
 
           <span className="text-gray-300">|</span>
 
           <button
-            onClick={() => onOpenBooking('Briefing Comercial')}
+            onClick={() => onOpenBooking(isDe ? 'Express-Briefing' : 'Express Briefing')}
             className="font-bold text-[#0F0F12] hover:text-gray-500 uppercase transition-colors cursor-pointer flex items-center space-x-1.5"
           >
-            <span>briefing exprés</span>
+            <span>{isDe ? 'Express-Briefing' : 'Express Briefing'}</span>
           </button>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Send, Calendar, Mail, Phone, User, CheckCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useLanguage } from '../context/LanguageContext';
 
 interface BriefingModalProps {
   isOpen: boolean;
@@ -9,13 +10,16 @@ interface BriefingModalProps {
 }
 
 export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, initialType }) => {
+  const { lang, t } = useLanguage();
+  const isDe = lang === 'DE';
+
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    projectType: initialType || 'Gastronomía & Alta Cocina',
-    budget: '2.500€ - 5.000€',
+    projectType: initialType || (isDe ? 'Gastronomie & Kulinarik' : 'Gastronomy & Culinary'),
+    budget: '2.500 CHF - 5.000 CHF',
     date: '',
     notes: ''
   });
@@ -53,7 +57,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 text-gray-500 hover:text-black hover:bg-gray-100 transition-colors cursor-pointer"
-          aria-label="Cerrar"
+          aria-label={t('modal.close')}
         >
           <X className="w-5 h-5" />
         </button>
@@ -64,13 +68,13 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
             {/* MODAL HEADER */}
             <div className="space-y-2 border-b border-gray-200 pb-4">
               <div className="inline-flex items-center space-x-2 text-xs font-sans font-bold uppercase tracking-widest text-[#A594F9]">
-                <span>Matices • Solicitud Directa de Briefing</span>
+                <span>matices • {t('booking.directBriefing')}</span>
               </div>
               <h3 className="text-2xl sm:text-4xl font-extrabold font-outfit text-[#0F0F12] tracking-tight">
-                {initialType ? `Reserva: ${initialType}` : 'Iniciar Proyecto / Briefing'}
+                {initialType ? `${isDe ? 'Anfrage:' : 'Booking:'} ${initialType}` : t('booking.title')}
               </h3>
               <p className="text-xs font-sans text-[#666670] font-light leading-relaxed">
-                Completa los requerimientos y te enviaremos la propuesta técnica y cotización en menos de 24 horas.
+                {t('booking.subtitle')}
               </p>
             </div>
 
@@ -80,7 +84,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                    Nombre Completo *
+                    {t('booking.name')}
                   </label>
                   <div className="relative">
                     <User className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
@@ -89,7 +93,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
                       required
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Ej. Carmen Rodríguez"
+                      placeholder={t('booking.namePlaceholder')}
                       className="w-full bg-gray-50 border border-gray-300 focus:border-[#A594F9] py-2.5 pl-10 pr-4 text-xs font-sans text-[#0F0F12] placeholder-gray-400 outline-none transition-colors"
                     />
                   </div>
@@ -97,7 +101,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
 
                 <div>
                   <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                    Email de Contacto *
+                    {t('booking.email')}
                   </label>
                   <div className="relative">
                     <Mail className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
@@ -106,7 +110,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
                       required
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="carmen@estudio.com"
+                      placeholder="client@company.ch"
                       className="w-full bg-gray-50 border border-gray-300 focus:border-[#A594F9] py-2.5 pl-10 pr-4 text-xs font-sans text-[#0F0F12] placeholder-gray-400 outline-none transition-colors"
                     />
                   </div>
@@ -116,7 +120,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                    Teléfono / WhatsApp
+                    {t('booking.phone')}
                   </label>
                   <div className="relative">
                     <Phone className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
@@ -124,7 +128,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="+34 600 000 000"
+                      placeholder="+41 76 000 00 00"
                       className="w-full bg-gray-50 border border-gray-300 focus:border-[#A594F9] py-2.5 pl-10 pr-4 text-xs font-sans text-[#0F0F12] placeholder-gray-400 outline-none transition-colors"
                     />
                   </div>
@@ -132,7 +136,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
 
                 <div>
                   <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                    Fecha Estimada
+                    {t('booking.date')}
                   </label>
                   <div className="relative">
                     <Calendar className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
@@ -146,33 +150,45 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
                 </div>
               </div>
 
-              {/* PROJECT TYPE SELECTOR */}
+              {/* PROJECT CATEGORY SELECTOR */}
               <div>
                 <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                  Categoría de Proyecto
+                  {t('booking.category')}
                 </label>
                 <select
                   value={formData.projectType}
                   onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                   className="w-full bg-gray-50 border border-gray-300 focus:border-[#A594F9] py-2.5 px-4 text-xs font-sans text-[#0F0F12] outline-none transition-colors cursor-pointer"
                 >
-                  <option value="Gastronomía & Alta Cocina">Gastronomía & Alta Cocina</option>
-                  <option value="Hoteles & Arquitectura">Hoteles & Arquitectura</option>
-                  <option value="Producción de Vídeo & Motion">Producción de Vídeo & Motion</option>
-                  <option value="Personalización & Merch (Vinilo/DTF)">Personalización & Merch (Vinilo/DTF)</option>
-                  <option value="Proyecto Digital (IA, Marca & Web)">Proyecto Digital (IA, Marca & Web)</option>
-                  <option value="Retrato Editorial & Moda">Retrato Editorial & Moda</option>
-                  <option value="Campaña Comercial & Producto">Campaña Comercial & Producto</option>
+                  {isDe ? (
+                    <>
+                      <option value="Autorenhochzeit & Paar-Story">Autorenhochzeit & Paar-Story</option>
+                      <option value="Gastronomie & Hotellerie">Gastronomie & Hotellerie</option>
+                      <option value="Filmproduktion & Werbespots">Filmproduktion & Werbespots</option>
+                      <option value="Digitales Projekt (KI, Branding & Web)">Digitales Projekt (KI, Branding & Web)</option>
+                      <option value="Redaktionelles Porträt & Mode">Redaktionelles Porträt & Mode</option>
+                      <option value="Markenkampagne & Produktfilm">Markenkampagne & Produktfilm</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="Bespoke Wedding & Couple Story">Bespoke Wedding & Couple Story</option>
+                      <option value="Gastronomy & Hospitality">Gastronomy & Hospitality</option>
+                      <option value="Film Production & Commercials">Film Production & Commercials</option>
+                      <option value="Digital Project (AI, Branding & Web)">Digital Project (AI, Branding & Web)</option>
+                      <option value="Editorial Portrait & Fashion">Editorial Portrait & Fashion</option>
+                      <option value="Brand Campaign & Product Film">Brand Campaign & Product Film</option>
+                    </>
+                  )}
                 </select>
               </div>
 
-              {/* ESTIMATED BUDGET RANGE */}
+              {/* ESTIMATED BUDGET RANGE IN CHF */}
               <div>
                 <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                  Presupuesto Orientativo
+                  {t('booking.budget')}
                 </label>
                 <div className="grid grid-cols-3 gap-2">
-                  {['1.500€ - 3.000€', '3.000€ - 7.000€', '+7.000€ Lux'].map((b) => (
+                  {['1.500 CHF - 3.000 CHF', '3.000 CHF - 7.000 CHF', '+7.000 CHF Lux'].map((b) => (
                     <button
                       type="button"
                       key={b}
@@ -192,13 +208,13 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
               {/* NOTES */}
               <div>
                 <label className="block text-[11px] font-sans font-bold uppercase tracking-wider text-gray-500 mb-1.5">
-                  Detalles del Briefing / Idea
+                  {t('booking.notes')}
                 </label>
                 <textarea
                   rows={3}
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  placeholder="Describe la localización, número de entregables, formato de vídeo, marca o diseño..."
+                  placeholder={t('booking.notesPlaceholder')}
                   className="w-full bg-gray-50 border border-gray-300 focus:border-[#A594F9] p-3 text-xs font-sans text-[#0F0F12] placeholder-gray-400 outline-none resize-none transition-colors"
                 ></textarea>
               </div>
@@ -209,7 +225,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
                 className="w-full py-3.5 px-4 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-bold text-xs tracking-widest uppercase transition-colors flex items-center justify-center space-x-2 cursor-pointer font-outfit shadow-md"
               >
                 <Send className="w-4 h-4" />
-                <span>Enviar Solicitud de Briefing</span>
+                <span>{t('booking.submit')}</span>
               </button>
 
             </form>
@@ -223,10 +239,18 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
 
             <div className="space-y-2">
               <h3 className="text-2xl font-outfit font-extrabold text-[#0F0F12]">
-                ¡Solicitud Recibida Correctamente!
+                {t('booking.successTitle')}
               </h3>
               <p className="text-xs font-sans text-[#666670] max-w-md mx-auto leading-relaxed">
-                Gracias, <strong className="text-[#0F0F12]">{formData.name}</strong>. Hemos registrado tus requerimientos para <span className="text-[#0F0F12] font-bold">{formData.projectType}</span>. Te contactaremos al correo <span className="text-[#0F0F12] font-bold">{formData.email}</span>.
+                {isDe ? (
+                  <>
+                    Vielen Dank, <strong className="text-[#0F0F12]">{formData.name}</strong>. Wir haben Ihre Angaben für <span className="text-[#0F0F12] font-bold">{formData.projectType}</span> erhalten. Wir melden uns unter <span className="text-[#0F0F12] font-bold">{formData.email}</span>.
+                  </>
+                ) : (
+                  <>
+                    Thank you, <strong className="text-[#0F0F12]">{formData.name}</strong>. We have received your inquiry for <span className="text-[#0F0F12] font-bold">{formData.projectType}</span>. We will contact you at <span className="text-[#0F0F12] font-bold">{formData.email}</span>.
+                  </>
+                )}
               </p>
             </div>
 
@@ -235,7 +259,7 @@ export const BriefingModal: React.FC<BriefingModalProps> = ({ isOpen, onClose, i
                 onClick={handleReset}
                 className="px-6 py-2.5 bg-[#0F0F12] text-white font-outfit font-bold text-xs uppercase tracking-widest hover:bg-[#A594F9] transition-colors cursor-pointer"
               >
-                Volver a Matices
+                {t('booking.backBtn')}
               </button>
             </div>
           </div>

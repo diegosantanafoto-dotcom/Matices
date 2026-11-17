@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Cpu, Palette, Globe, Share2, CheckCircle2, ArrowRight, Layers, Sparkles, X, Check, Camera, Zap, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface DigitalService {
   id: string;
@@ -14,78 +15,6 @@ interface DigitalService {
   badge: string;
   packType: 'ia' | 'branding' | 'web' | 'social';
 }
-
-const DIGITAL_SERVICES: DigitalService[] = [
-  {
-    id: 'dig-1',
-    num: '01',
-    tag: 'IA Generativa & Automatización',
-    title: 'Implementación de IA',
-    subtitle: 'Asistentes Virtuales, Agendamiento & Workflows Neuronal',
-    description: 'Desarrollo de asistentes virtuales con inteligencia artificial para atención 24/7, integración de apps para agendamiento automático de citas y automatización de procesos creativos de marca.',
-    icon: Cpu,
-    badge: 'Asistentes & Agendamiento',
-    packType: 'ia',
-    sampleImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1000&auto=format&fit=crop',
-    features: [
-      'Asistentes Virtuales & Chatbots IA 24/7 para atención al cliente',
-      'Apps & Sistemas de Agendamiento Automático de citas y reservas',
-      'Automatización de Workflows de trabajo y respuesta inteligente',
-      'Postproducción visual asistida por modelos neuronales'
-    ]
-  },
-  {
-    id: 'dig-2',
-    num: '02',
-    tag: 'Branding & Identidad Visual',
-    title: 'Diseño de Marca',
-    subtitle: 'Identidades de Autor, Guías de Estilo & Sistemas Visuales',
-    description: 'Construcción de identidades de marca memorables: logotipos vectoriales de alta precisión, paletas cromáticas con carácter, tipografía editorial y manuales corporativos.',
-    icon: Palette,
-    badge: 'Identidad & Branding',
-    packType: 'branding',
-    sampleImage: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?q=80&w=1000&auto=format&fit=crop',
-    features: [
-      'Diseño de Logotipo principal y versión para fondo oscuro',
-      'Manuales de Identidad Visual impresos y digitales',
-      'Papelería corporativa, packagings y guías de estilo para redes'
-    ]
-  },
-  {
-    id: 'dig-3',
-    num: '03',
-    tag: 'Desarrollo Web & UI/UX',
-    title: 'Diseño Web',
-    subtitle: 'Web Landing Page, Plataformas Multi-Página & E-Commerce',
-    description: 'Desarrollo de sitios web a medida centrados en la estética editorial, velocidad de carga instantánea, optimización SEO y producción audiovisual integrada.',
-    icon: Globe,
-    badge: 'Landing & E-Commerce',
-    packType: 'web',
-    sampleImage: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop',
-    features: [
-      'Landing Pages responsive de alto rendimiento',
-      'Web Corporativa Multi-Página con portfolio de proyectos',
-      'Tiendas Online E-Commerce con pasarelas de pago seguras'
-    ]
-  },
-  {
-    id: 'dig-4',
-    num: '04',
-    tag: 'Social Media & Contenido Continuo',
-    title: 'Social Media & Redes',
-    subtitle: 'Creación de Contenido Mensual, Reels Cinemáticos & Fotografía',
-    description: 'Planes mensuales de contenido audiovisual diseñados para que las marcas mantengan una presencia constante, estética y con estándar de agencia profesional.',
-    icon: Share2,
-    badge: 'Planes Mensuales',
-    packType: 'social',
-    sampleImage: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=1000&auto=format&fit=crop',
-    features: [
-      'Producción cinemática 4K de Reels y TikToks',
-      'Sesiones fotográficas editoriales de producto y equipo',
-      'Calendarios de contenido, estrategia y copys bilingües'
-    ]
-  }
-];
 
 interface FeatureItem {
   text: string;
@@ -106,201 +35,14 @@ interface ServicePackItem {
   extraNote?: string;
 }
 
-const IA_SERVICES: ServicePackItem[] = [
-  {
-    id: 'ia-asistente',
-    name: 'Asistente Virtual IA & Chatbot 24/7',
-    categoryTag: 'Atención al Cliente Automática',
-    priceCHF: 1200,
-    description: 'Implementación de un asistente virtual entrenado con la información de tu empresa para responder consultas en tiempo real 24/7.',
-    features: [
-      { text: 'Entrenamiento con preguntas frecuentes y catálogo de tu empresa' },
-      { text: 'Integración en sitio web, WhatsApp o Instagram Direct' },
-      { text: 'Soporte multilingüe automático (Español, Alemán, Inglés, Francés)' },
-      { text: 'Panel de métricas y derivación directa a agente humano' }
-    ]
-  },
-  {
-    id: 'ia-[#A594F9]',
-    name: 'Sistema de Agendamiento Citas & Reservas',
-    categoryTag: 'Reserva Automática de Clientes',
-    priceCHF: 950,
-    isPopular: true,
-    badge: 'Muy Solicitado',
-    description: 'Aplicación y sistema inteligente de reservas de citas sincronizado con tu calendario y recordatorios automáticos por SMS/Email.',
-    features: [
-      { text: 'Página de agendamiento personalizada con colores de tu marca' },
-      { text: 'Sincronización bidireccional con Google Calendar / Outlook' },
-      { text: 'Recordatorios automáticos pre-cita por email o WhatsApp' },
-      { text: 'Pasarela opcional de pago anticipado o depósito de reserva' }
-    ]
-  },
-  {
-    id: 'ia-workflows',
-    name: 'Automatización de Workflows Creativos',
-    categoryTag: 'Generación & Procesos Visuales',
-    priceCHF: 1600,
-    description: 'Flujos de trabajo personalizados con herramientas de IA generativa para edición masiva de imágenes, upscaling 8K y activos de marketing.',
-    features: [
-      { text: 'Upscaling 8K y restauración cromática neuronal de fotografías' },
-      { text: 'Generación y extensión de fondos con inteligencia artificial' },
-      { text: 'Automatización de plantillas de diseño para redes sociales' }
-    ]
-  }
-];
-
-const WEB_PACKS: ServicePackItem[] = [
-  {
-    id: 'web-landing',
-    name: 'Pack Web Landing Page Exprés',
-    categoryTag: 'Landing Page + Foto + Vídeo Intro',
-    priceCHF: 2500,
-    description: 'Ideal para lanzar una presencia digital impecable de una sola página básica con producción audiovisual propia.',
-    referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
-    features: [
-      { text: 'Desarrollo Web Landing Page de una sola página (Diseño responsive & ultra-rápido)' },
-      { text: 'Incluye 1 Sesión Fotográfica corporativa o de producto' },
-      { text: 'Incluye 1 Vídeo Intro / Presentación Cinemática de marca', hasVideoTrigger: true },
-      { text: 'Formulario de contacto directo, mapa interactivo y SEO básico técnico' }
-    ]
-  },
-  {
-    id: 'web-corp',
-    name: 'Pack Web Corporativa Multi-Página',
-    categoryTag: 'Sitio Web Completo (Hasta 5 páginas)',
-    priceCHF: 4200,
-    isPopular: true,
-    badge: 'Recomendado',
-    description: 'Para empresas y firmas que requieren estructura de secciones independientes, portfolio y SEO avanzado.',
-    referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
-    features: [
-      { text: 'Sitio Web Corporativo de hasta 5 páginas (Inicio, Servicios, Sobre Nosotros, Galería, Contacto)' },
-      { text: 'Incluye 1 Sesión Fotográfica Completa de Instalaciones & Equipo' },
-      { text: 'Incluye 1 Vídeo Cinemático de Presentación de Marca (edición 4K)', hasVideoTrigger: true },
-      { text: 'Micro-animaciones fluidas, panel autogestionable y SEO técnico avanzado' }
-    ]
-  },
-  {
-    id: 'web-ecommerce',
-    name: 'Pack Plataforma Web & E-Commerce',
-    categoryTag: 'Tienda Online / Catálogo de Venta',
-    priceCHF: 6800,
-    description: 'Desarrollo web avanzado con pasarela de pagos integradas (Credit Card, TWINT, Apple Pay) y catálogo interactivo.',
-    referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
-    features: [
-      { text: 'Plataforma E-Commerce o Catálogo Interactivo a medida' },
-      { text: 'Pasarela de pagos seguros (TWINT, Stripe, Apple Pay, Tarjeta)' },
-      { text: 'Producción de Vídeos para Productos/Servicios', hasVideoTrigger: true },
-      { text: 'Fotografía de Catálogo Completa y soporte prioritario' }
-    ]
-  }
-];
-
-const BRANDING_PACKS: ServicePackItem[] = [
-  {
-    id: 'brand-express',
-    name: 'Pack Identidad Esencial & Logo',
-    categoryTag: 'Diseño Rápido & Manual Básico',
-    priceCHF: 700,
-    description: 'Diseño ágil de logotipo y guía básica de marca para proyectos que necesitan lanzar rápido.',
-    features: [
-      { text: 'Diseño rápido de Logotipo principal y versión para fondo oscuro' },
-      { text: 'Manual de uso de marca básico (paleta de colores y tipografía principal)' },
-      { text: 'Entrega de archivos vectoriales originales (SVG, EPS, PDF, PNG HD)' }
-    ]
-  },
-  {
-    id: 'brand-full',
-    name: 'Pack Sistema de Marca Completo',
-    categoryTag: 'Branding 360º & Guía Editorial',
-    priceCHF: 1500,
-    isPopular: true,
-    badge: 'Branding Completo',
-    description: 'Desarrollo visual profundo con variantes de marca, maquetación de papelería y guía de aplicación integral.',
-    features: [
-      { text: 'Identidad visual 360º (Logo principal, secundario, isotipo y marca de agua)' },
-      { text: 'Manual de Identidad de Marca avanzado (guía de uso digital e impreso)' },
-      { text: 'Maquetación de papelería corporativa, plantillas para redes sociales y firmas de correo' }
-    ]
-  }
-];
-
-const PACK_360: ServicePackItem = {
-  id: 'pack-360-vip',
-  name: 'Pack 360º Brand & Digital Transformation',
-  categoryTag: 'Pack Integral: Marca + Web + Vídeo + Fotos Team',
-  priceCHF: 5000,
-  isPopular: true,
-  badge: 'Pack VIP CHF 5.000',
-  description: 'La solución completa de CHF 5.000 para crear o transformar tu marca con branding, landing page web, vídeo de presentación cinemático y fotos del equipo.',
-  referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
-  extraNote: 'Sesión Fotográfica de Producto disponible como valor extra a cotizar según volumen y necesidades del catálogo.',
-  features: [
-    { text: 'Creación de Marca Básica (Diseño de Logo + Manual de uso de marca básico)' },
-    { text: 'Desarrollo Web Landing Page de Autor de una sola página (responsive & ultra-rápida)' },
-    { text: 'Vídeo Intro / Presentación Cinemática de Marca', hasVideoTrigger: true },
-    { text: 'Sesión Fotográfica del Equipo (Retratos editoriales del equipo retocados)' }
-  ]
-};
-
-const SOCIAL_PACKS: ServicePackItem[] = [
-  {
-    id: 'pack-starter',
-    name: 'Pack Essential Presence',
-    categoryTag: 'Sencillo • Para Marcas que Inician',
-    priceCHF: 449,
-    period: '/ mes',
-    description: 'Ideal para mantener el perfil actualizado con material profesional sin una gran inversión.',
-    referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
-    features: [
-      { text: '1 Vídeo Reel/TikTok cinemático 4K (duración final: 30 a 60 segundos)', hasVideoTrigger: true },
-      { text: '1 Sesión fotográfica de producto/equipo (15 fotos HD retocadas)' },
-      { text: 'Planificación de calendario de contenidos mensual' },
-      { text: 'Redacción de copys bilingües (ES / DE / EN) y hashtags' }
-    ]
-  },
-  {
-    id: 'pack-growth',
-    name: 'Pack Growth Accelerator',
-    categoryTag: 'Recomendado • Publicación Semanal',
-    priceCHF: 999,
-    period: '/ mes',
-    isPopular: true,
-    badge: 'Más Popular',
-    description: 'Para negocios que requieren tracción constante, interacción semanal y crecimiento de audiencia.',
-    referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
-    features: [
-      { text: '4 Vídeos Reels/TikToks cinemáticos 4K (duración final: 15 a 45 seg c/u - 1/semana)', hasVideoTrigger: true },
-      { text: '2 Sesiones fotográficas mensuales (35 fotos HD retocadas)' },
-      { text: 'Diseño de Carruseles editoriales y Stories semanales' },
-      { text: 'Programación de publicaciones y gestión básica de comunidad' },
-      { text: 'Estrategia de contenido mensual e informes de rendimiento' }
-    ]
-  },
-  {
-    id: 'pack-empire',
-    name: 'Pack Empire Full Scale',
-    categoryTag: 'Pro • Cobertura Integral',
-    priceCHF: 1899,
-    period: '/ mes',
-    badge: 'Máximo Impacto',
-    description: 'Delegación total de la producción audiovisual y redes sociales para marcas consolidadas.',
-    referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
-    features: [
-      { text: '8 a 10 Vídeos Reels/TikToks cinemáticos 4K (duración final: 15 a 60 seg c/u - 2/semana)', hasVideoTrigger: true },
-      { text: '4 Sesiones fotográficas mensuales (60+ fotos HD retocadas)' },
-      { text: 'Estrategia integral de contenido, dirección de arte e identidad' },
-      { text: 'Gestión y optimización de campañas de publicidad (Social Ads)' },
-      { text: 'Informes mensuales avanzados de analítica y soporte prioritario 24/7' }
-    ]
-  }
-];
-
 interface DigitalShowcaseProps {
   onOpenBooking: (type?: string) => void;
 }
 
 export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking }) => {
+  const { lang, t } = useLanguage();
+  const isDe = lang === 'DE';
+
   const [activeModalTab, setActiveModalTab] = useState<'360' | 'ia' | 'web' | 'branding' | 'social'>('ia');
   const [isPacksModalOpen, setIsPacksModalOpen] = useState<boolean>(false);
   const [previewVideoUrl, setPreviewVideoUrl] = useState<string | null>(null);
@@ -309,6 +51,410 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
     setActiveModalTab(tab);
     setIsPacksModalOpen(true);
   };
+
+  const DIGITAL_SERVICES: DigitalService[] = [
+    {
+      id: 'dig-1',
+      num: '01',
+      tag: isDe ? 'Generative KI & Automatisierung' : 'Generative AI & Automation',
+      title: isDe ? 'KI-Implementierung' : 'AI Implementation',
+      subtitle: isDe ? 'Virtuelle Assistenten, Buchungs-Apps & Neuronale Workflows' : 'Virtual Assistants, Booking Apps & Neural Workflows',
+      description: isDe
+        ? 'Entwicklung intelligenter virtueller Assistenten für 24/7-Kundenservice, Integration automatisierter Terminbuchungs-Apps und Workflow-Automatisierung für Schweizer Unternehmen.'
+        : 'Development of AI virtual assistants for 24/7 customer care, integration of automated booking apps, and creative brand workflow automation.',
+      icon: Cpu,
+      badge: isDe ? 'Assistenten & Buchung' : 'Assistants & Booking',
+      packType: 'ia',
+      sampleImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=1000&auto=format&fit=crop',
+      features: isDe
+        ? [
+            'Virtuelle KI-Assistenten & 24/7 Chatbots für Kundenservice',
+            'Automatisierte Termin- & Buchungssysteme für Kunden',
+            'Automatisierung von Workflows und intelligenter Datenverarbeitung',
+            'KI-gestützte visuelle Postproduktion und Bildoptimierung'
+          ]
+        : [
+            'AI Virtual Assistants & 24/7 Chatbots for customer care',
+            'Automated Booking & Appointment Systems for clients',
+            'Workflow Automation and intelligent process routing',
+            'AI-assisted visual post-production and image upscaling'
+          ]
+    },
+    {
+      id: 'dig-2',
+      num: '02',
+      tag: isDe ? 'Branding & Visuelle Identität' : 'Branding & Visual Identity',
+      title: isDe ? 'Brand Design' : 'Brand Design',
+      subtitle: isDe ? 'Autorenidentitäten, Styleguides & Visuelle Systeme' : 'Signature Identities, Style Guides & Visual Systems',
+      description: isDe
+        ? 'Aufbau einprägsamer Markenidentitäten: präzise Vektorlogos, charakterstarke Farbwelten, redaktionelle Typografie und umfassende Corporate Design Manuals.'
+        : 'Crafting memorable brand identities: high-precision vector logos, distinctive color palettes, editorial typography, and comprehensive corporate manuals.',
+      icon: Palette,
+      badge: isDe ? 'Identität & Branding' : 'Identity & Branding',
+      packType: 'branding',
+      sampleImage: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?q=80&w=1000&auto=format&fit=crop',
+      features: isDe
+        ? [
+            'Design des Hauptlogos und Version für dunkle Hintergründe',
+            'Corporate Identity Manuals (digital & druckfertig)',
+            'Geschäftsausstattung, Verpackungen und Social-Media-Guides'
+          ]
+        : [
+            'Primary Logo design and dark background variant',
+            'Corporate Identity Manuals (digital & print-ready)',
+            'Stationery design, packaging concepts, and social media guides'
+          ]
+    },
+    {
+      id: 'dig-3',
+      num: '03',
+      tag: isDe ? 'Webentwicklung & UI/UX' : 'Web Development & UI/UX',
+      title: isDe ? 'Webdesign' : 'Web Design',
+      subtitle: isDe ? 'Landing Pages, Corporate Websites & E-Commerce' : 'Landing Pages, Corporate Platforms & E-Commerce',
+      description: isDe
+        ? 'Maßgeschneiderte Webentwicklung mit Fokus auf redaktionelle Ästhetik, blitzschnelle Ladezeiten, Schweizer Hosting-Standard, SEO und integrierte Medienproduktion.'
+        : 'Bespoke web development focused on editorial aesthetics, instant load speed, Swiss hosting standards, SEO optimization, and integrated media production.',
+      icon: Globe,
+      badge: isDe ? 'Landing & E-Commerce' : 'Landing & E-Commerce',
+      packType: 'web',
+      sampleImage: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop',
+      features: isDe
+        ? [
+            'Responsive High-Performance Landing Pages',
+            'Mehrseitige Unternehmenswebsites mit Projektportfolio',
+            'Online-Shops mit sicheren Schweizer Zahlungsgateways (TWINT, Stripe)'
+          ]
+        : [
+            'High-performance responsive Landing Pages',
+            'Multi-page Corporate Websites with project portfolio',
+            'E-Commerce shops with secure Swiss payment gateways (TWINT, Stripe)'
+          ]
+    },
+    {
+      id: 'dig-4',
+      num: '04',
+      tag: isDe ? 'Social Media & Content Creation' : 'Social Media & Content Creation',
+      title: isDe ? 'Social Media & Content' : 'Social Media & Content',
+      subtitle: isDe ? 'Monatliche Content-Pläne, Kinoreels & Fotografie' : 'Monthly Content Plans, Cinematic Reels & Photography',
+      description: isDe
+        ? 'Monatliche audiovisuelle Content-Pläne, damit Marken eine konsistente, ästhetische und professionelle Präsenz auf höchstem Niveau aufrechterhalten.'
+        : 'Monthly audiovisual content packages designed to maintain a consistent, high-end agency standard across all digital touchpoints.',
+      icon: Share2,
+      badge: isDe ? 'Monatspläne' : 'Monthly Plans',
+      packType: 'social',
+      sampleImage: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?q=80&w=1000&auto=format&fit=crop',
+      features: isDe
+        ? [
+            'Kinoreife 4K-Produktion von Reels und TikToks',
+            'Redaktionelle Fotoshootings von Produkten und Team',
+            'Content-Kalender, strategische Ausrichtung und zweisprachige Copys'
+          ]
+        : [
+            'Cinematic 4K production of Reels and TikToks',
+            'Editorial photo sessions of products and team',
+            'Content calendar, strategy, and bilingual copywriting'
+          ]
+    }
+  ];
+
+  const PACK_360: ServicePackItem = {
+    id: 'pack-360-vip',
+    name: 'Pack 360º Brand & Digital Transformation',
+    categoryTag: isDe ? 'Gesamtpaket: Marke + Web + Video + Teamfotos' : 'Full Package: Brand + Web + Video + Team Photos',
+    priceCHF: 5000,
+    isPopular: true,
+    badge: 'VIP CHF 5.000',
+    description: isDe
+      ? 'Die schlüsselfertige Gesamtlösung für CHF 5.000: Markenidentität, responsive Landing Page, kinoreifer Imagefilm und professionelle Teamporträts.'
+      : 'The complete CHF 5,000 turnkey solution: brand identity, responsive landing page, cinematic intro video, and professional team portraits.',
+    referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
+    extraNote: isDe
+      ? 'Produktfotoshooting als zubuchbare Option je nach Sortimentsumfang verfügbar.'
+      : 'Product photography available as an add-on depending on catalog volume.',
+    features: isDe
+      ? [
+          { text: 'Basis-Branding (Logo-Design + Brand Styleguide)' },
+          { text: 'Responsive Autoren-Landing Page (ultra-schnell & mobiloptimiert)' },
+          { text: 'Kinoreifes Marken-Intro / Imagevideo (4K)', hasVideoTrigger: true },
+          { text: 'Team-Fotoshooting (retuschierte redaktionelle Porträts)' }
+        ]
+      : [
+          { text: 'Core Brand Design (Logo + Brand Style Guide)' },
+          { text: 'Bespoke Single-Page Landing Page (ultra-fast & responsive)' },
+          { text: 'Cinematic Brand Intro / Showcase Video (4K)', hasVideoTrigger: true },
+          { text: 'Team Photoshoot (editorial retouched portraits)' }
+        ]
+  };
+
+  const IA_SERVICES: ServicePackItem[] = [
+    {
+      id: 'ia-asistente',
+      name: isDe ? 'Virtueller KI-Assistent & 24/7 Chatbot' : 'AI Virtual Assistant & 24/7 Chatbot',
+      categoryTag: isDe ? 'Automatischer Kundenservice' : 'Automated Customer Care',
+      priceCHF: 1200,
+      description: isDe
+        ? 'Implementierung eines maßgeschneiderten KI-Assistenten, trainiert mit Ihren Unternehmensdaten für präzise 24/7-Antworten in Echtzeit.'
+        : 'Deployment of a bespoke AI assistant trained on your business data to handle customer inquiries in real time 24/7.',
+      features: isDe
+        ? [
+            { text: 'Training mit FAQs und Firmenkatalogen' },
+            { text: 'Integration in Website, WhatsApp oder Instagram Direct' },
+            { text: 'Automatische Mehrsprachigkeit (Deutsch, Englisch, Französisch, Spanisch)' },
+            { text: 'Dashboard & Weiterleitung an Mitarbeiter bei komplexen Fragen' }
+          ]
+        : [
+            { text: 'Trained with your business knowledge base and catalog' },
+            { text: 'Website, WhatsApp, and Instagram Direct integration' },
+            { text: 'Automatic multilingual support (German, English, French, Spanish)' },
+            { text: 'Analytics dashboard & seamless human handoff' }
+          ]
+    },
+    {
+      id: 'ia-booking',
+      name: isDe ? 'Intelligentes Buchungs- & Terminsystem' : 'Smart Booking & Reservation App',
+      categoryTag: isDe ? 'Automatische Terminvergabe' : 'Automated Client Scheduling',
+      priceCHF: 950,
+      isPopular: true,
+      badge: isDe ? 'Sehr Beliebt' : 'Most Popular',
+      description: isDe
+        ? 'Intelligente Buchungs-App synchronisiert mit Google Calendar / Outlook mit automatischen Erinnerungen via E-Mail/SMS.'
+        : 'Smart client scheduling system synchronized with Google Calendar / Outlook, featuring automatic SMS/Email reminders.',
+      features: isDe
+        ? [
+            { text: 'Personalisierte Buchungsseite im Markendesign' },
+            { text: 'Echtzeit-Synchronisation mit Google Calendar / Outlook' },
+            { text: 'Automatische Terminerinnerungen vorab' },
+            { text: 'Optionale Anzahlung oder Vorauszahlung' }
+          ]
+        : [
+            { text: 'Customized booking page matching your brand design' },
+            { text: 'Two-way sync with Google Calendar & Outlook' },
+            { text: 'Automated pre-appointment notifications' },
+            { text: 'Optional deposit / upfront payment gateway' }
+          ]
+    },
+    {
+      id: 'ia-workflows',
+      name: isDe ? 'Kreative Workflow-Automatisierung' : 'Creative Workflow Automation',
+      categoryTag: isDe ? 'Visuelle KI-Prozesse' : 'Visual AI Workflows',
+      priceCHF: 1600,
+      description: isDe
+        ? 'Automatisierte Pipelines mit generativer KI für Bildoptimierung, 8K-Upscaling und strukturierte Content-Erstellung.'
+        : 'Custom pipelines leveraging generative AI for high-res image enhancement, 8K upscaling, and marketing asset creation.',
+      features: isDe
+        ? [
+            { text: '8K-Upscaling und neuronale Farbkorrektur von Fotos' },
+            { text: 'KI-gestützte Hintergrunderweiterung und Produktinszenierung' },
+            { text: 'Automatisierte Social-Media-Template-Generierung' }
+          ]
+        : [
+            { text: '8K neural image upscaling and color restoration' },
+            { text: 'AI generative background extension and staging' },
+            { text: 'Automated social media asset generation' }
+          ]
+    }
+  ];
+
+  const WEB_PACKS: ServicePackItem[] = [
+    {
+      id: 'web-landing',
+      name: isDe ? 'Pack Web Landing Page Express' : 'Pack Web Landing Page Express',
+      categoryTag: isDe ? 'Landing Page + Foto + Video Intro' : 'Landing Page + Photo + Video Intro',
+      priceCHF: 2500,
+      description: isDe
+        ? 'Perfekt für den schnellen Markteintritt mit einer modernen Single-Page-Präsenz inklusive eigener Medienproduktion.'
+        : 'Ideal for a swift, high-impact digital launch with custom audiovisual assets and single-page speed.',
+      referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
+      features: isDe
+        ? [
+            { text: 'Entwicklung einer responsiven, ultra-schnellen Landing Page' },
+            { text: 'Inklusive 1 professionellem Fotoshooting (Produkt oder Team)' },
+            { text: 'Inklusive 1 kinoreifem Marken-Intro / Video', hasVideoTrigger: true },
+            { text: 'Kontaktformular, interaktive Karte und Basis-SEO' }
+          ]
+        : [
+            { text: 'Ultra-fast responsive single-page web development' },
+            { text: 'Includes 1 professional photo session (product or team)' },
+            { text: 'Includes 1 cinematic brand intro video', hasVideoTrigger: true },
+            { text: 'Direct contact form, map integration, and technical SEO' }
+          ]
+    },
+    {
+      id: 'web-corp',
+      name: isDe ? 'Pack Corporate Website (Bis 5 Seiten)' : 'Pack Corporate Website (Up to 5 Pages)',
+      categoryTag: isDe ? 'Komplette Unternehmenswebsite' : 'Complete Corporate Website',
+      priceCHF: 4200,
+      isPopular: true,
+      badge: isDe ? 'Empfohlen' : 'Recommended',
+      description: isDe
+        ? 'Für Unternehmen, die eine fundierte Seitenstruktur, Leistungsübersichten, Portfolio und erweitertes SEO benötigen.'
+        : 'For businesses requiring structured multi-page architecture, project portfolio, and advanced search optimization.',
+      referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
+      features: isDe
+        ? [
+            { text: 'Website mit bis zu 5 Unterseiten (Home, Services, Über uns, Portfolio, Kontakt)' },
+            { text: 'Inklusive umfassendem Foto-Shooting der Räumlichkeiten & Team' },
+            { text: 'Inklusive 4K-Kino-Imagefilm der Marke', hasVideoTrigger: true },
+            { text: 'Flüssige Mikro-Animationen, Content-Management und erweitertes SEO' }
+          ]
+        : [
+            { text: 'Corporate website with up to 5 pages (Home, Services, About, Portfolio, Contact)' },
+            { text: 'Includes full facility & team photography session' },
+            { text: 'Includes 4K cinematic brand showcase video', hasVideoTrigger: true },
+            { text: 'Fluid micro-interactions, CMS capability, and advanced SEO' }
+          ]
+    },
+    {
+      id: 'web-ecommerce',
+      name: isDe ? 'Pack E-Commerce & Webplattform' : 'Pack E-Commerce & Platform',
+      categoryTag: isDe ? 'Online-Shop & Verkaufskatalog' : 'Online Store & Catalog',
+      priceCHF: 6800,
+      description: isDe
+        ? 'Leistungsstarker Online-Shop mit Schweizer Zahlungsgateways (TWINT, Stripe, Apple Pay, Kreditkarte) und Produktkatalog.'
+        : 'Advanced e-commerce platform with integrated Swiss payments (TWINT, Stripe, Apple Pay, Card) and interactive catalog.',
+      referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
+      features: isDe
+        ? [
+            { text: 'Maßgeschneiderter E-Commerce-Shop oder Buchungsplattform' },
+            { text: 'Sichere Bezahlung (TWINT, Stripe, Apple Pay, Kreditkarten)' },
+            { text: 'Videoproduktion für Schlüsselprodukte/Dienstleistungen', hasVideoTrigger: true },
+            { text: 'Vollständige Katalogfotografie und priorisierter Support' }
+          ]
+        : [
+            { text: 'Custom e-commerce store or booking platform' },
+            { text: 'Secure payments (TWINT, Stripe, Apple Pay, Credit Card)' },
+            { text: 'Video production for featured products/services', hasVideoTrigger: true },
+            { text: 'Complete catalog photography and priority support' }
+          ]
+    }
+  ];
+
+  const BRANDING_PACKS: ServicePackItem[] = [
+    {
+      id: 'brand-express',
+      name: isDe ? 'Pack Essential Brand & Logo' : 'Pack Essential Brand & Logo',
+      categoryTag: isDe ? 'Logo & Basis-Styleguide' : 'Logo & Core Style Guide',
+      priceCHF: 700,
+      description: isDe
+        ? 'Prägnantes Logo-Design und grundlegender Styleguide für Projekte mit schnellem Startbedarf.'
+        : 'Agile logo design and essential brand manual for ventures requiring a swift launch.',
+      features: isDe
+        ? [
+            { text: 'Design des Hauptlogos und Version für dunkle Hintergründe' },
+            { text: 'Basis-Styleguide (Farbpalette und primäre Typografie)' },
+            { text: 'Lieferung aller Vektordateien (SVG, EPS, PDF, PNG HD)' }
+          ]
+        : [
+            { text: 'Primary logo design and dark background version' },
+            { text: 'Basic brand manual (color palette and primary typography)' },
+            { text: 'Full vector asset delivery (SVG, EPS, PDF, PNG HD)' }
+          ]
+    },
+    {
+      id: 'brand-full',
+      name: isDe ? 'Pack 360º Brand System & Manual' : 'Pack 360º Brand System & Manual',
+      categoryTag: isDe ? 'Umfassendes Corporate Design' : 'Comprehensive Corporate Design',
+      priceCHF: 1500,
+      isPopular: true,
+      badge: isDe ? 'Vollständiges Branding' : 'Full Branding',
+      description: isDe
+        ? 'Tiefgehende Markenentwicklung mit Markenzeichen, Geschäftspapieren, Social-Media-Templates und Gestaltungsrichtlinien.'
+        : 'In-depth visual identity design with submarks, stationery templates, social media layouts, and comprehensive guidelines.',
+      features: isDe
+        ? [
+            { text: '360º Markenidentität (Hauptlogo, Sekundärlogo, Isotyp und Wasserzeichen)' },
+            { text: 'Umfassendes Corporate Design Manual (digital & druckfertig)' },
+            { text: 'Gestaltung von Geschäftsausstattung, Social-Media-Vorlagen und E-Mail-Signaturen' }
+          ]
+        : [
+            { text: '360º visual identity (Primary logo, secondary logo, submark, and watermark)' },
+            { text: 'Comprehensive Brand Identity Manual (digital and print guidelines)' },
+            { text: 'Stationery layouts, social media templates, and email signatures' }
+          ]
+    }
+  ];
+
+  const SOCIAL_PACKS: ServicePackItem[] = [
+    {
+      id: 'pack-starter',
+      name: 'Pack Essential Presence',
+      categoryTag: isDe ? 'Basis • Für junge Marken' : 'Essential • For New Brands',
+      priceCHF: 449,
+      period: isDe ? '/ Monat' : '/ month',
+      description: isDe
+        ? 'Ideal für eine kontinuierliche, professionelle Präsenz ohne übermäßigen Aufwand.'
+        : 'Ideal for keeping your profile updated with high-end assets on a disciplined budget.',
+      referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
+      features: isDe
+        ? [
+            { text: '1 kinoreifes 4K-Reel/TikTok (30 bis 60 Sekunden)', hasVideoTrigger: true },
+            { text: '1 Fotoshooting (15 retuschierte HD-Fotos für Posts)' },
+            { text: 'Monatliche Redaktions- und Content-Planung' },
+            { text: 'Zweisprachige Texte (DE / EN) und Hashtag-Strategie' }
+          ]
+        : [
+            { text: '1 cinematic 4K Reel/TikTok (30 to 60 seconds)', hasVideoTrigger: true },
+            { text: '1 photo session (15 retouched HD photos)' },
+            { text: 'Monthly content calendar planning' },
+            { text: 'Bilingual captions (DE / EN) and hashtag strategy' }
+          ]
+    },
+    {
+      id: 'pack-growth',
+      name: 'Pack Growth Accelerator',
+      categoryTag: isDe ? 'Empfohlen • Wöchentlicher Content' : 'Recommended • Weekly Content',
+      priceCHF: 999,
+      period: isDe ? '/ Monat' : '/ month',
+      isPopular: true,
+      badge: isDe ? 'Beliebteste Wahl' : 'Most Popular',
+      description: isDe
+        ? 'Für Unternehmen, die stetiges Wachstum, Interaktion und wöchentliche Frische benötigen.'
+        : 'For businesses demanding steady audience growth, weekly touchpoints, and regular traction.',
+      referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
+      features: isDe
+        ? [
+            { text: '4 kinoreife 4K-Reels/TikToks (1 pro Woche)', hasVideoTrigger: true },
+            { text: '2 Fotoshootings monatlich (35 retuschierte HD-Fotos)' },
+            { text: 'Design von redaktionellen Karussells & wöchentlichen Stories' },
+            { text: 'Beitragsplanung und Basis-Community-Management' },
+            { text: 'Monatlicher Performance-Report und Optimierung' }
+          ]
+        : [
+            { text: '4 cinematic 4K Reels/TikToks (1 per week)', hasVideoTrigger: true },
+            { text: '2 monthly photo sessions (35 retouched HD photos)' },
+            { text: 'Design of editorial carousels & weekly stories' },
+            { text: 'Post scheduling and core community care' },
+            { text: 'Monthly performance analytics and strategy review' }
+          ]
+    },
+    {
+      id: 'pack-empire',
+      name: 'Pack Empire Full Scale',
+      categoryTag: isDe ? 'Pro • Ganzheitliche Betreuung' : 'Pro • Full Scale Coverage',
+      priceCHF: 1899,
+      period: isDe ? '/ Monat' : '/ month',
+      badge: isDe ? 'Maximaler Impact' : 'Maximum Impact',
+      description: isDe
+        ? 'Vollständige Delegation der audiovisuellen Produktion und Social Media für etablierte Marken.'
+        : 'Complete delegation of audiovisual content and social media presence for established brands.',
+      referenceVideoUrl: 'https://player.vimeo.com/video/1126177678',
+      features: isDe
+        ? [
+            { text: '8 bis 10 kinoreife 4K-Reels/TikToks (2 pro Woche)', hasVideoTrigger: true },
+            { text: '4 Fotoshootings monatlich (60+ retuschierte HD-Fotos)' },
+            { text: 'Ganzheitliche Content-Strategie, Art Direction & Markenführung' },
+            { text: 'Betreuung und Optimierung von Social-Media-Werbeanzeigen' },
+            { text: 'Detaillierte Monatsanalysen und 24/7 Priority Support' }
+          ]
+        : [
+            { text: '8 to 10 cinematic 4K Reels/TikToks (2 per week)', hasVideoTrigger: true },
+            { text: '4 monthly photo sessions (60+ retouched HD photos)' },
+            { text: 'Comprehensive content strategy, art direction & brand guardianship' },
+            { text: 'Social media ads management and creative optimization' },
+            { text: 'Advanced monthly analytics and 24/7 priority support' }
+          ]
+    }
+  ];
 
   return (
     <section id="digital" className="pt-52 pb-28 bg-[#FAFAFC] w-full border-0 cursor-default text-[#0F0F12]">
@@ -322,22 +468,22 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
         <div className="border-b border-gray-200 pb-10 max-w-4xl space-y-4">
           <div className="inline-flex items-center space-x-2.5 text-sm font-sans uppercase tracking-[0.2em] text-[#A594F9] font-extrabold">
             <Layers className="w-4 h-4" />
-            <span>Soluciones Digitales & Servicios</span>
+            <span>{t('digital.tag')}</span>
           </div>
           
           <h1 className="text-4xl sm:text-6xl font-extrabold text-[#0F0F12] font-outfit tracking-tight leading-tight">
-            Servicios Digitales Integrados: <br />
+            {isDe ? 'Integrierte Digitale Lösungen:' : 'Integrated Digital Services:'} <br />
             <span className="font-editorial-italic font-normal text-4xl sm:text-6xl text-[#A594F9]">
-              IA, Marca, Web & Redes Sociales
+              {isDe ? 'KI, Marke, Web & Social Media' : 'AI, Brand, Web & Social Media'}
             </span>
           </h1>
 
           <p className="text-base sm:text-lg text-[#555560] font-light leading-relaxed">
-            Estructura transparente de servicios diseñados para impulsar marcas en Suiza: desarrollo de asistentes virtuales e inteligencia artificial, identidad de marca, sitios web a medida y gestión mensual de contenidos.
+            {t('digital.subtitle')}
           </p>
         </div>
 
-        {/* MODERN 4 CATEGORIES GRID (CLEAN DESCRIPTIONS ONLY - NO PACK LISTS ON OUTER CARDS) */}
+        {/* MODERN 4 CATEGORIES GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {DIGITAL_SERVICES.map((service) => {
             const IconComponent = service.icon;
@@ -348,7 +494,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                 className="bg-white border border-gray-200 shadow-sm rounded-none overflow-hidden transition-all duration-500 flex flex-col justify-between group hover:shadow-2xl hover:border-[#A594F9]"
               >
                 <div>
-                  {/* MINIMALIST ARCHITECTURAL/STUDIO IMAGE HEADER */}
+                  {/* IMAGE HEADER */}
                   <div className="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
                     <img
                       src={service.sampleImage}
@@ -368,7 +514,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                     </div>
                   </div>
 
-                  {/* CARD CONTENT WITH CLEAN DESCRIPTION & CAPABILITIES */}
+                  {/* CARD CONTENT */}
                   <div className="p-7 space-y-5">
                     
                     <div className="flex items-center space-x-3.5">
@@ -392,7 +538,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                     {/* CAPABILITIES CHECKLIST */}
                     <div className="space-y-3 pt-3 border-t border-gray-100">
                       <span className="text-xs font-sans text-gray-400 uppercase tracking-widest block font-extrabold">
-                        Capacidades Principales:
+                        {isDe ? 'Hauptmerkmale:' : 'Core Capabilities:'}
                       </span>
                       <div className="space-y-2.5 text-xs sm:text-sm font-sans">
                         {service.features.map((feat, fIdx) => (
@@ -416,7 +562,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                     className="w-full py-4 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-extrabold text-xs uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-md flex items-center justify-center space-x-2"
                   >
                     <Zap className="w-4 h-4" />
-                    <span>Ver Paquetes & Tarifas</span>
+                    <span>{t('digital.viewPack')}</span>
                   </button>
                 </div>
 
@@ -430,15 +576,15 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
           <div className="space-y-3 text-center md:text-left">
             <div className="inline-flex items-center space-x-2 text-xs font-sans uppercase tracking-widest text-[#A594F9] font-extrabold">
               <Sparkles className="w-4 h-4 text-[#A594F9]" />
-              <span>Pack 360º Transformación Digital</span>
+              <span>{PACK_360.name}</span>
             </div>
             
             <h3 className="text-3xl sm:text-4xl font-extrabold text-[#0F0F12] font-outfit">
-              Branding + Web Landing + Vídeo Intro + Fotos Team
+              {PACK_360.categoryTag}
             </h3>
 
             <p className="text-sm text-gray-500 font-light max-w-2xl leading-relaxed">
-              El paquete definitivo para crear tu marca básica, landing page web responsive, vídeo de presentación cinemático y fotografías del equipo.
+              {PACK_360.description}
             </p>
           </div>
 
@@ -448,14 +594,14 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
               className="px-8 py-4.5 bg-[#A594F9] hover:bg-[#0F0F12] text-white font-extrabold text-xs uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-md whitespace-nowrap flex items-center justify-center space-x-2"
             >
               <Sparkles className="w-4 h-4" />
-              <span>Ver Detalle Pack 360º</span>
+              <span>{isDe ? 'Details Pack 360º' : 'View Pack 360º Details'}</span>
             </button>
 
             <button
-              onClick={() => onOpenBooking('Contratación Pack 360º')}
+              onClick={() => onOpenBooking(isDe ? 'Buchung Pack 360º (CHF 5.000)' : 'Booking Pack 360º (CHF 5,000)')}
               className="px-8 py-4.5 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-extrabold text-xs uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-md flex items-center justify-center space-x-2 whitespace-nowrap"
             >
-              <span>Contratar Pack 360º</span>
+              <span>{isDe ? 'Pack 360º anfragen' : 'Request Pack 360º'}</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -477,6 +623,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
             <button
               onClick={() => setIsPacksModalOpen(false)}
               className="absolute top-6 right-6 p-2 text-gray-400 hover:text-[#0F0F12] transition-colors cursor-pointer"
+              aria-label={t('modal.close')}
             >
               <X className="w-7 h-7" />
             </button>
@@ -485,22 +632,22 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
             <div className="border-b border-gray-100 pb-5 space-y-2">
               <div className="inline-flex items-center space-x-2 text-xs font-sans uppercase tracking-widest text-[#A594F9] font-extrabold">
                 <Layers className="w-4 h-4" />
-                <span>Tarifario Oficial & Paquetes Digitales (en CHF)</span>
+                <span>{isDe ? 'Offizielle Tarife & Digitale Pakete (in CHF)' : 'Official Tariffs & Digital Packages (in CHF)'}</span>
               </div>
               
               <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F0F12] font-outfit">
-                Explora los Paquetes Digitales de Matices
+                {isDe ? 'Digitale Pakete von matices' : 'Explore Digital Packages by matices'}
               </h2>
             </div>
 
-            {/* TAB NAVIGATION IN MODAL WITH BIGGER TEXT */}
+            {/* TAB NAVIGATION IN MODAL */}
             <div className="flex border-b border-gray-200 space-x-4 overflow-x-auto text-xs sm:text-sm font-sans font-extrabold uppercase tracking-wider">
               {[
                 { id: '360', label: 'Pack 360º VIP (CHF 5.000)' },
-                { id: 'ia', label: 'IA & Asistentes (3 Packs)' },
-                { id: 'web', label: 'Diseño Web (3 Packs)' },
-                { id: 'branding', label: 'Diseño de Marca (2 Packs)' },
-                { id: 'social', label: 'Social Media (3 Packs)' }
+                { id: 'ia', label: isDe ? 'KI & Assistenten (3 Pakete)' : 'AI & Assistants (3 Packs)' },
+                { id: 'web', label: isDe ? 'Webdesign (3 Pakete)' : 'Web Design (3 Packs)' },
+                { id: 'branding', label: isDe ? 'Brand Design (2 Pakete)' : 'Brand Design (2 Packs)' },
+                { id: 'social', label: isDe ? 'Social Media (3 Pakete)' : 'Social Media (3 Packs)' }
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -516,7 +663,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
               ))}
             </div>
 
-            {/* TAB CONTENT 1: PACK 360º VIP (CHF 5,000) */}
+            {/* TAB CONTENT 1: PACK 360º VIP */}
             {activeModalTab === '360' && (
               <div className="space-y-6 animate-in fade-in duration-200">
                 <div className="p-8 sm:p-10 bg-[#FAFAFC] border-2 border-[#A594F9] shadow-xl relative space-y-6">
@@ -534,7 +681,9 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                       <div className="text-4xl font-extrabold text-[#0F0F12] font-outfit">
                         CHF 5.000
                       </div>
-                      <span className="text-xs text-gray-500 uppercase tracking-widest font-sans font-semibold">Pago Único / Proyecto Completo</span>
+                      <span className="text-xs text-gray-500 uppercase tracking-widest font-sans font-semibold">
+                        {isDe ? 'Einmalzahlung / Gesamtprojekt' : 'One-time Payment / Full Project'}
+                      </span>
                     </div>
                   </div>
 
@@ -542,7 +691,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                     {PACK_360.description}
                   </p>
 
-                  {/* INCLUDED SERVICES CHECKLIST WITH VER TRIGGER */}
+                  {/* INCLUDED SERVICES CHECKLIST */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm font-sans pt-2">
                     {PACK_360.features.map((feat, fIdx) => (
                       <div key={fIdx} className="flex items-center justify-between text-[#0F0F12] bg-white p-4 border border-gray-200">
@@ -557,7 +706,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                             onClick={() => setPreviewVideoUrl('https://player.vimeo.com/video/1126177678?autoplay=1')}
                             className="px-3 py-1 bg-[#A594F9] hover:bg-[#0F0F12] text-white text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer flex items-center space-x-1 shrink-0 ml-2"
                           >
-                            <span>Ver</span>
+                            <span>{t('video.watch')}</span>
                             <ArrowUpRight className="w-3.5 h-3.5" />
                           </button>
                         )}
@@ -568,18 +717,18 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                   {/* PRODUCT PHOTO EXTRA NOTE */}
                   <div className="p-4 bg-amber-50 border border-amber-200 text-amber-950 text-xs sm:text-sm font-sans font-medium flex items-center space-x-3">
                     <Camera className="w-5 h-5 text-amber-700 shrink-0" />
-                    <span><strong>Nota sobre Producto:</strong> {PACK_360.extraNote}</span>
+                    <span><strong>{isDe ? 'Hinweis zu Produkten:' : 'Note on Products:'}</strong> {PACK_360.extraNote}</span>
                   </div>
 
                   <div className="pt-2 text-right">
                     <button
                       onClick={() => {
                         setIsPacksModalOpen(false);
-                        onOpenBooking('Contratación Pack 360º (CHF 5.000)');
+                        onOpenBooking(isDe ? 'Buchung Pack 360º (CHF 5.000)' : 'Booking Pack 360º (CHF 5,000)');
                       }}
                       className="w-full sm:w-auto px-10 py-4.5 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-extrabold text-xs sm:text-sm uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-xl inline-flex items-center justify-center space-x-2"
                     >
-                      <span>Contratar Pack 360º Integral (CHF 5.000)</span>
+                      <span>{isDe ? 'Pack 360º anfragen (CHF 5.000)' : 'Request Pack 360º (CHF 5,000)'}</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -588,7 +737,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
               </div>
             )}
 
-            {/* TAB CONTENT 2: IA & ASISTENTES (3 PACKS) */}
+            {/* TAB CONTENT 2: IA & ASISTENTES */}
             {activeModalTab === 'ia' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in duration-200">
                 {IA_SERVICES.map((pack) => (
@@ -625,7 +774,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
 
                       <div className="space-y-3 pt-1 text-xs sm:text-sm font-sans">
                         <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest block">
-                          Incluye:
+                          {isDe ? 'Leistungsumfang:' : 'Included:'}
                         </span>
                         {pack.features.map((feat, fIdx) => (
                           <div key={fIdx} className="flex items-start justify-between text-[#0F0F12] py-1 border-b border-gray-100 last:border-b-0">
@@ -642,11 +791,11 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                       <button
                         onClick={() => {
                           setIsPacksModalOpen(false);
-                          onOpenBooking(`Contratación IA: ${pack.name} (CHF ${pack.priceCHF})`);
+                          onOpenBooking(`${isDe ? 'Anfrage KI:' : 'AI Inquiry:'} ${pack.name} (CHF ${pack.priceCHF})`);
                         }}
                         className="w-full py-4 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-extrabold text-xs uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-md flex items-center justify-center space-x-2"
                       >
-                        <span>Contratar {pack.name}</span>
+                        <span>{isDe ? `${pack.name} anfragen` : `Request ${pack.name}`}</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -655,7 +804,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
               </div>
             )}
 
-            {/* TAB CONTENT 3: DISEÑO WEB (3 PACKS) */}
+            {/* TAB CONTENT 3: WEBDESIGN */}
             {activeModalTab === 'web' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in duration-200">
                 {WEB_PACKS.map((pack) => (
@@ -692,7 +841,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
 
                       <div className="space-y-3 pt-1 text-xs sm:text-sm font-sans">
                         <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest block">
-                          Incluye:
+                          {isDe ? 'Leistungsumfang:' : 'Included:'}
                         </span>
                         {pack.features.map((feat, fIdx) => (
                           <div key={fIdx} className="flex items-start justify-between text-[#0F0F12] py-1 border-b border-gray-100 last:border-b-0">
@@ -707,7 +856,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                                 onClick={() => setPreviewVideoUrl('https://player.vimeo.com/video/1126177678?autoplay=1')}
                                 className="px-2.5 py-0.5 bg-[#A594F9] text-white text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#0F0F12] transition-colors cursor-pointer flex items-center space-x-0.5 shrink-0 ml-2"
                               >
-                                <span>Ver</span>
+                                <span>{t('video.watch')}</span>
                                 <ArrowUpRight className="w-3 h-3" />
                               </button>
                             )}
@@ -720,11 +869,11 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                       <button
                         onClick={() => {
                           setIsPacksModalOpen(false);
-                          onOpenBooking(`Contratación Web: ${pack.name} (CHF ${pack.priceCHF})`);
+                          onOpenBooking(`${isDe ? 'Anfrage Web:' : 'Web Inquiry:'} ${pack.name} (CHF ${pack.priceCHF})`);
                         }}
                         className="w-full py-4 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-extrabold text-xs uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-md flex items-center justify-center space-x-2"
                       >
-                        <span>Contratar {pack.name}</span>
+                        <span>{isDe ? `${pack.name} anfragen` : `Request ${pack.name}`}</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -733,7 +882,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
               </div>
             )}
 
-            {/* TAB CONTENT 4: DISEÑO DE MARCA / BRANDING (2 PACKS) */}
+            {/* TAB CONTENT 4: BRANDING */}
             {activeModalTab === 'branding' && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-in fade-in duration-200">
                 {BRANDING_PACKS.map((pack) => (
@@ -770,7 +919,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
 
                       <div className="space-y-3 pt-2 text-xs sm:text-sm font-sans">
                         <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest block">
-                          Entregables del Proyecto:
+                          {isDe ? 'Projekt-Deliverables:' : 'Project Deliverables:'}
                         </span>
                         {pack.features.map((feat, fIdx) => (
                           <div key={fIdx} className="flex items-start space-x-2.5 text-[#0F0F12]">
@@ -785,11 +934,11 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                       <button
                         onClick={() => {
                           setIsPacksModalOpen(false);
-                          onOpenBooking(`Contratación Marca: ${pack.name} (CHF ${pack.priceCHF})`);
+                          onOpenBooking(`${isDe ? 'Anfrage Branding:' : 'Branding Inquiry:'} ${pack.name} (CHF ${pack.priceCHF})`);
                         }}
                         className="w-full py-4 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-extrabold text-xs uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-md flex items-center justify-center space-x-2"
                       >
-                        <span>Contratar {pack.name}</span>
+                        <span>{isDe ? `${pack.name} anfragen` : `Request ${pack.name}`}</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -798,7 +947,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
               </div>
             )}
 
-            {/* TAB CONTENT 5: SOCIAL MEDIA (3 PACKS) */}
+            {/* TAB CONTENT 5: SOCIAL MEDIA */}
             {activeModalTab === 'social' && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in duration-200">
                 {SOCIAL_PACKS.map((pack) => (
@@ -836,7 +985,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
 
                       <div className="space-y-3 pt-1 text-xs sm:text-sm font-sans">
                         <span className="text-xs font-extrabold text-gray-400 uppercase tracking-widest block">
-                          Servicios Mensuales:
+                          {isDe ? 'Monatliche Leistungen:' : 'Monthly Deliverables:'}
                         </span>
                         {pack.features.map((feat, fIdx) => (
                           <div key={fIdx} className="flex items-start justify-between text-[#0F0F12] py-1 border-b border-gray-100 last:border-b-0">
@@ -851,7 +1000,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                                 onClick={() => setPreviewVideoUrl('https://player.vimeo.com/video/1126177678?autoplay=1')}
                                 className="px-2.5 py-0.5 bg-[#A594F9] text-white text-[11px] font-extrabold uppercase tracking-wider hover:bg-[#0F0F12] transition-colors cursor-pointer flex items-center space-x-0.5 shrink-0 ml-2"
                               >
-                                <span>Ver</span>
+                                <span>{t('video.watch')}</span>
                                 <ArrowUpRight className="w-3 h-3" />
                               </button>
                             )}
@@ -864,11 +1013,11 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
                       <button
                         onClick={() => {
                           setIsPacksModalOpen(false);
-                          onOpenBooking(`Contratación Social: ${pack.name} (CHF ${pack.priceCHF}/mes)`);
+                          onOpenBooking(`${isDe ? 'Anfrage Social Media:' : 'Social Media Inquiry:'} ${pack.name} (CHF ${pack.priceCHF})`);
                         }}
                         className="w-full py-4 bg-[#0F0F12] hover:bg-[#A594F9] text-white font-extrabold text-xs uppercase tracking-widest transition-colors cursor-pointer rounded-none font-outfit shadow-md flex items-center justify-center space-x-2"
                       >
-                        <span>Contratar {pack.name}</span>
+                        <span>{isDe ? `${pack.name} anfragen` : `Request ${pack.name}`}</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -890,7 +1039,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
           <button
             onClick={() => setPreviewVideoUrl(null)}
             className="absolute top-6 right-6 z-50 p-2 text-white hover:text-[#A594F9] transition-colors focus:outline-none cursor-pointer"
-            aria-label="Cerrar vídeo"
+            aria-label={t('video.close')}
           >
             <X className="w-8 h-8" />
           </button>
@@ -901,7 +1050,7 @@ export const DigitalShowcase: React.FC<DigitalShowcaseProps> = ({ onOpenBooking 
           >
             <iframe
               src={previewVideoUrl}
-              title="Vídeo de Muestra"
+              title="Showcase Video"
               className="w-full h-full border-0 outline-none"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

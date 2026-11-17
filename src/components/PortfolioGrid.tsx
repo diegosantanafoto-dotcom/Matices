@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PORTFOLIO_ITEMS } from '../data/portfolioData';
 import { LightboxModal } from './LightboxModal';
 import { Maximize2, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface PortfolioGridProps {
   selectedCategory: string;
@@ -14,16 +15,28 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({
   onSelectCategory,
   onOpenBooking
 }) => {
+  const { t } = useLanguage();
   const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null);
 
   const categories = [
-    { id: 'todos', label: 'TODOS LOS PROYECTOS' },
-    { id: 'bodas', label: 'BODAS' },
-    { id: 'lifestyle', label: 'LIFESTYLE' },
-    { id: 'retratos', label: 'RETRATOS' },
-    { id: 'moda', label: 'MODA' },
-    { id: 'marcas', label: 'MARCAS' },
+    { id: 'todos', labelKey: 'sub.todos' },
+    { id: 'bodas', labelKey: 'sub.bodas' },
+    { id: 'lifestyle', labelKey: 'sub.lifestyle' },
+    { id: 'retratos', labelKey: 'sub.retratos' },
+    { id: 'moda', labelKey: 'sub.moda' },
+    { id: 'marcas', labelKey: 'sub.marcas' },
   ];
+
+  const getCategoryLabel = (cat: string) => {
+    const map: Record<string, string> = {
+      bodas: 'sub.bodas',
+      lifestyle: 'sub.lifestyle',
+      retratos: 'sub.retratos',
+      moda: 'sub.moda',
+      marcas: 'sub.marcas',
+    };
+    return t(map[cat] || cat);
+  };
 
   const filteredItems = selectedCategory === 'todos'
     ? PORTFOLIO_ITEMS
@@ -65,7 +78,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({
                     : 'hover:text-[#0F0F12]'
                 }`}
               >
-                {cat.label}
+                {t(cat.labelKey)}
               </button>
             );
           })}
@@ -97,7 +110,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({
                   
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-sans font-semibold uppercase tracking-widest bg-black/60 px-2.5 py-1 text-white">
-                      {item.categoryLabel}
+                      {getCategoryLabel(item.category)}
                     </span>
                     <Maximize2 className="w-4 h-4 text-white" />
                   </div>
@@ -122,7 +135,7 @@ export const PortfolioGrid: React.FC<PortfolioGridProps> = ({
         {/* NO RESULTS FALLBACK */}
         {filteredItems.length === 0 && (
           <div className="text-center py-20 border-0 rounded-none bg-gray-50">
-            <p className="text-gray-500 font-sans text-xs">No se encontraron proyectos en esta categoría.</p>
+            <p className="text-gray-500 font-sans text-xs">{t('portfolio.empty')}</p>
           </div>
         )}
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ShoppingCart, ChevronDown } from 'lucide-react';
+import { Menu, X, ShoppingCart, ChevronDown, Globe } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HeaderProps {
   activeTab: 'HOME' | 'PORTFOLIO' | 'PROYECTOS' | 'VÍDEOS' | 'MERCH' | 'DIGITAL' | '+INFO';
@@ -26,6 +27,9 @@ export const Header: React.FC<HeaderProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const { lang, setLang, t } = useLanguage();
+  const isDe = lang === 'DE';
+
   const isMainDomain = typeof window !== 'undefined' && 
     (window.location.hostname === 'matices.ch' || window.location.hostname === 'www.matices.ch');
 
@@ -38,12 +42,21 @@ export const Header: React.FC<HeaderProps> = ({
     '+INFO'
   ];
 
+  const navItemKeyMap: Record<string, string> = {
+    'PORTFOLIO': 'nav.portfolio',
+    'PROYECTOS': 'nav.proyectos',
+    'VÍDEOS': 'nav.videos',
+    'MERCH': 'nav.merch',
+    'DIGITAL': 'nav.digital',
+    '+INFO': 'nav.info',
+  };
+
   const portfolioSubmenu = [
-    { id: 'bodas', label: 'BODAS' },
-    { id: 'lifestyle', label: 'LIFESTYLE' },
-    { id: 'retratos', label: 'RETRATOS' },
-    { id: 'moda', label: 'MODA' },
-    { id: 'marcas', label: 'MARCAS' },
+    { id: 'bodas', labelKey: 'sub.bodas' },
+    { id: 'lifestyle', labelKey: 'sub.lifestyle' },
+    { id: 'retratos', labelKey: 'sub.retratos' },
+    { id: 'moda', labelKey: 'sub.moda' },
+    { id: 'marcas', labelKey: 'sub.marcas' },
   ];
 
   const handleSubmenuClick = (categoryId: string) => {
@@ -65,17 +78,18 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={() => onSelectTab('HOME')}
           className="group flex items-center space-x-2 focus:outline-none text-left cursor-pointer"
-          title="matices — Volver al inicio"
+          title={t('header.homeTitle')}
         >
           <span className="font-outfit text-2xl sm:text-3xl font-extrabold tracking-tight text-[#111111] lowercase group-hover:opacity-75 transition-opacity">
             matices
           </span>
         </button>
 
-        {/* CENTER-RIGHT NAVIGATION: PORTFOLIO, BLOG, PROYECTOS, VÍDEOS, +INFO (HOME REMOVED AS REQUESTED) */}
+        {/* CENTER-RIGHT NAVIGATION */}
         <nav className="hidden lg:flex items-center space-x-10 text-xs font-sans font-semibold tracking-[0.2em]">
           {navItems.map((item) => {
             const isActive = activeTab === item;
+            const displayLabel = t(navItemKeyMap[item] || item);
 
             if (item === 'PORTFOLIO') {
               return (
@@ -96,20 +110,20 @@ export const Header: React.FC<HeaderProps> = ({
                         : 'text-[#666670] hover:text-[#111111]'
                     }`}
                   >
-                    <span>{item}</span>
+                    <span>{displayLabel}</span>
                     <ChevronDown className="w-3 h-3 transition-transform group-hover:rotate-180 text-gray-400" />
                   </button>
 
                   {/* SUBMENU DROPDOWN BOX */}
                   {isPortfolioHovered && (
-                    <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-100 shadow-2xl py-3 z-50 rounded-none animate-in fade-in duration-200">
+                    <div className="absolute top-full left-0 mt-2 w-52 bg-white border border-gray-100 shadow-2xl py-3 z-50 rounded-none animate-in fade-in duration-200">
                       {portfolioSubmenu.map((sub) => (
                         <button
                           key={sub.id}
                           onClick={() => handleSubmenuClick(sub.id)}
                           className="block w-full text-left px-5 py-2.5 text-[11px] font-sans font-semibold uppercase tracking-widest text-[#666670] hover:text-[#A594F9] hover:bg-gray-50 transition-colors"
                         >
-                          {sub.label}
+                          {t(sub.labelKey)}
                         </button>
                       ))}
                     </div>
@@ -128,15 +142,38 @@ export const Header: React.FC<HeaderProps> = ({
                     : 'text-[#666670] hover:text-[#111111]'
                 }`}
               >
-                {item}
+                {displayLabel}
               </button>
             );
           })}
         </nav>
 
-        {/* RIGHT SIDE: INSTAGRAM -> YOUTUBE -> WHATSAPP -> SHOPPING CART */}
-        <div className="hidden xl:flex items-center space-x-9 text-[#111111]">
+        {/* RIGHT SIDE: LANGUAGE SWITCHER -> SOCIAL -> WHATSAPP -> SHOPPING CART */}
+        <div className="hidden xl:flex items-center space-x-7 text-[#111111]">
           
+          {/* LANGUAGE SWITCHER: DE / EN */}
+          <div className="flex items-center space-x-1.5 border border-gray-200/90 bg-gray-50/50 px-2.5 py-1 text-[11px] font-sans font-bold tracking-widest shadow-2xs">
+            <button
+              onClick={() => setLang('DE')}
+              className={`transition-colors cursor-pointer px-1 ${
+                lang === 'DE' ? 'text-[#0F0F12] font-black underline underline-offset-4 decoration-2 decoration-[#A594F9]' : 'text-gray-400 hover:text-gray-700'
+              }`}
+              title="Deutsch"
+            >
+              DE
+            </button>
+            <span className="text-gray-300">|</span>
+            <button
+              onClick={() => setLang('EN')}
+              className={`transition-colors cursor-pointer px-1 ${
+                lang === 'EN' ? 'text-[#0F0F12] font-black underline underline-offset-4 decoration-2 decoration-[#A594F9]' : 'text-gray-400 hover:text-gray-700'
+              }`}
+              title="English"
+            >
+              EN
+            </button>
+          </div>
+
           {/* FACEBOOK ICON */}
           <a
             href="https://www.facebook.com/matices.ch"
@@ -176,7 +213,7 @@ export const Header: React.FC<HeaderProps> = ({
             </svg>
           </a>
 
-          {/* WHATSAPP ICON (POSITIONED RIGHT BEFORE SHOPPING CART) */}
+          {/* WHATSAPP ICON */}
           <a
             href="https://wa.me/41762155203"
             target="_blank"
@@ -192,9 +229,9 @@ export const Header: React.FC<HeaderProps> = ({
           {/* SHOPPING CART ICON (Solo en subdominio / catálogo merch) */}
           {!isMainDomain && (
             <button
-              onClick={() => onOpenBooking('Presets / Licencias')}
+              onClick={() => onOpenBooking(isDe ? 'Presets / Lizenzen' : 'Presets / Licenses')}
               className="text-[#111111] hover:text-[#A594F9] transition-colors p-1 relative cursor-pointer"
-              title="Carrito de Compras / Presets"
+              title={isDe ? 'Warenkorb / Presets' : 'Shopping Cart / Presets'}
             >
               <ShoppingCart className="w-4 h-4" />
               <span className="absolute -top-1.5 -right-1.5 w-3.5 h-3.5 bg-[#111111] text-white text-[8px] font-bold rounded-full flex items-center justify-center">
@@ -205,11 +242,27 @@ export const Header: React.FC<HeaderProps> = ({
 
         </div>
 
-        {/* MOBILE MENU TOGGLE */}
+        {/* MOBILE MENU TOGGLE WITH QUICK LANG INDICATOR */}
         <div className="lg:hidden flex items-center space-x-3">
+          <div className="flex items-center space-x-1 border border-gray-200 px-2 py-0.5 text-[10px] font-sans font-bold">
+            <button
+              onClick={() => setLang('DE')}
+              className={lang === 'DE' ? 'text-[#0F0F12] font-black underline' : 'text-gray-400'}
+            >
+              DE
+            </button>
+            <span className="text-gray-300">|</span>
+            <button
+              onClick={() => setLang('EN')}
+              className={lang === 'EN' ? 'text-[#0F0F12] font-black underline' : 'text-gray-400'}
+            >
+              EN
+            </button>
+          </div>
+
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="p-2 text-[#111111] focus:outline-none"
+            className="p-2 text-[#111111] focus:outline-none cursor-pointer"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -235,7 +288,7 @@ export const Header: React.FC<HeaderProps> = ({
                       : 'text-[#666670]'
                   }`}
                 >
-                  {item}
+                  {t(navItemKeyMap[item] || item)}
                 </button>
                 {item === 'PORTFOLIO' && (
                   <div className="pl-4 py-2 space-y-2 border-b border-gray-100 bg-gray-50">
@@ -245,7 +298,7 @@ export const Header: React.FC<HeaderProps> = ({
                         onClick={() => handleSubmenuClick(sub.id)}
                         className="block w-full text-left py-1 text-xs text-gray-600 hover:text-[#A594F9]"
                       >
-                        • {sub.label}
+                        • {t(sub.labelKey)}
                       </button>
                     ))}
                   </div>
@@ -255,13 +308,31 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           <div className="pt-6 border-t border-gray-100 space-y-4 font-sans">
+            {/* MOBILE LANGUAGE SWITCHER */}
+            <div className="flex items-center justify-center space-x-4 py-2 border border-gray-200 text-xs font-bold uppercase tracking-widest">
+              <span className="text-gray-400 text-[10px]"><Globe className="w-3.5 h-3.5 inline mr-1" /> Sprache / Language:</span>
+              <button
+                onClick={() => setLang('DE')}
+                className={`cursor-pointer ${lang === 'DE' ? 'text-[#0F0F12] font-black underline underline-offset-4 decoration-2 decoration-[#A594F9]' : 'text-gray-400'}`}
+              >
+                DEUTSCH (DE)
+              </button>
+              <span className="text-gray-300">|</span>
+              <button
+                onClick={() => setLang('EN')}
+                className={`cursor-pointer ${lang === 'EN' ? 'text-[#0F0F12] font-black underline underline-offset-4 decoration-2 decoration-[#A594F9]' : 'text-gray-400'}`}
+              >
+                ENGLISH (EN)
+              </button>
+            </div>
+
             <a
               href="https://wa.me/41762155203"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full py-3.5 bg-[#A594F9] text-white text-xs uppercase tracking-widest font-bold flex items-center justify-center space-x-2"
             >
-              <span>WhatsApp Directo</span>
+              <span>{t('header.whatsappDirect')}</span>
             </a>
           </div>
         </div>

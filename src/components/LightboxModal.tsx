@@ -88,7 +88,7 @@ export const LightboxModal: React.FC<LightboxModalProps> = ({
               onClose();
             }}
             className="absolute top-6 right-6 z-50 p-2 text-[#111111] hover:text-[#A594F9] transition-colors cursor-pointer focus:outline-none"
-            aria-label="Cerrar modal"
+            aria-label="Close"
           >
             <X className="w-7 h-7 stroke-[1.5]" />
           </button>

@@ -2,18 +2,63 @@ import { useState } from 'react';
 import { VIDEO_SECTIONS } from '../data/videoData';
 import type { VideoItem } from '../data/videoData';
 import { Play, X } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface VideoGridProps {
   onOpenBooking: (type?: string) => void;
 }
 
 export const VideoGrid: React.FC<VideoGridProps> = () => {
+  const { lang, t } = useLanguage();
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+
+  const isDe = lang === 'DE';
 
   // HELPER TO CONVERT YOUTUBE URL TO AUTOPLAY WITH FULLSCREEN & SHARE CONTROLS
   const getCleanAutoplayEmbedUrl = (url: string) => {
     const separator = url.includes('?') ? '&' : '?';
     return `${url}${separator}autoplay=1&controls=1&rel=0&playsinline=1`;
+  };
+
+  const getCategoryBadge = (cat: string) => {
+    const c = cat.toUpperCase();
+    if (c === 'MODA') return isDe ? 'MODE' : 'FASHION';
+    if (c === 'MUSICAL') return isDe ? 'MUSIK' : 'MUSIC';
+    if (c === 'MARCA') return isDe ? 'MARKE' : 'BRAND';
+    if (c === 'PUBLICIDAD') return isDe ? 'WERBUNG' : 'COMMERCIAL';
+    if (c === 'EVENTO') return 'EVENT';
+    return c;
+  };
+
+  const getVideoDescription = (video: VideoItem) => {
+    const descriptions: Record<string, { DE: string; EN: string }> = {
+      'v1-1': {
+        DE: 'Offizieller Werbespot und filmische Berichterstattung über Hochzeitsmode.',
+        EN: 'Official commercial and cinematic editorial bridal fashion coverage.'
+      },
+      'v1-2': {
+        DE: 'Exklusives Studio-Interview und filmische Podcast-Produktion.',
+        EN: 'Exclusive studio interview and cinematic podcast production.'
+      },
+      'v1-3': {
+        DE: 'Offizielles Musikvideo mit filmischer 4K-Ästhetik und Color Grading.',
+        EN: 'Official music video with 4K cinematic visual direction and color grading.'
+      },
+      'v2-1': {
+        DE: 'Markenfilm und visuelle Erzählung für Luxusmarken.',
+        EN: 'Brand film and visual narrative for luxury brands.'
+      },
+      'v2-2': {
+        DE: 'High-End-Werbespot für Mode- und Lifestyle-Kampagnen.',
+        EN: 'High-end commercial spot for fashion and lifestyle campaigns.'
+      },
+      'v2-3': {
+        DE: 'Filmische Dokumentation und unvergessliche Momente.',
+        EN: 'Cinematic event documentary and memorable highlights.'
+      }
+    };
+
+    return descriptions[video.id]?.[lang] || video.description;
   };
 
   return (
@@ -55,7 +100,7 @@ export const VideoGrid: React.FC<VideoGridProps> = () => {
 
                       {/* CATEGORY GLASS BADGE IN TOP RIGHT CORNER INSIDE THUMBNAIL */}
                       <div className="absolute top-3 right-3 z-10 bg-black/80 backdrop-blur-md px-3 py-1 rounded-none text-[11px] font-sans text-white uppercase tracking-widest font-extrabold border border-white/20 shadow-md select-none">
-                        <span>{video.category}</span>
+                        <span>{getCategoryBadge(video.category)}</span>
                       </div>
                     </div>
 
@@ -66,7 +111,7 @@ export const VideoGrid: React.FC<VideoGridProps> = () => {
                       </h3>
 
                       <p className="text-xs text-[#666670] font-light leading-relaxed">
-                        {video.description}
+                        {getVideoDescription(video)}
                       </p>
                     </div>
 
@@ -89,8 +134,8 @@ export const VideoGrid: React.FC<VideoGridProps> = () => {
           {/* TOP RIGHT CLOSE BUTTON */}
           <button
             onClick={() => setSelectedVideo(null)}
-            className="absolute top-6 right-6 z-50 p-2 text-[#111111] hover:text-[#A594F9] transition-colors cursor-default focus:outline-none"
-            aria-label="Cerrar vídeo"
+            className="absolute top-6 right-6 z-50 p-2 text-[#111111] hover:text-[#A594F9] transition-colors cursor-pointer focus:outline-none"
+            aria-label={t('video.close')}
           >
             <X className="w-7 h-7 stroke-[1.5]" />
           </button>

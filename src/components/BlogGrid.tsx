@@ -1,52 +1,110 @@
 import React, { useState } from 'react';
 import { BookOpen, ArrowRight, Clock, X } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface BlogPost {
   id: string;
-  title: string;
-  category: string;
-  date: string;
-  readTime: string;
+  title: Record<'DE' | 'EN', string>;
+  category: Record<'DE' | 'EN', string>;
+  date: Record<'DE' | 'EN', string>;
+  readTime: Record<'DE' | 'EN', string>;
   imageUrl: string;
-  excerpt: string;
-  content: string;
+  excerpt: Record<'DE' | 'EN', string>;
+  content: Record<'DE' | 'EN', string>;
 }
 
 const BLOG_POSTS: BlogPost[] = [
   {
     id: 'post-1',
-    title: 'Apuntes de Estudio — El Arte del Claroscuro en la Fotografía Gastronómica',
-    category: 'Técnica & Iluminación',
-    date: '14 Octubre 2024',
-    readTime: '6 min lectura',
+    title: {
+      DE: 'Studio-Notizen — Die Kunst des Chiaroscuro in der Food- & Produktfotografie',
+      EN: 'Studio Notes — The Art of Chiaroscuro in Culinary & Product Photography'
+    },
+    category: {
+      DE: 'Licht & Technik',
+      EN: 'Lighting & Technique'
+    },
+    date: {
+      DE: '14. Oktober 2024',
+      EN: 'October 14, 2024'
+    },
+    readTime: {
+      DE: '6 Min. Lesezeit',
+      EN: '6 min read'
+    },
     imageUrl: '/images/marcas/SAN07748.jpg',
-    excerpt: 'Cómo esculpir sombras profundas y volumen en emplatados mediante modificadores de luz dura con nido de abeja.',
-    content: 'La fotografía gastronómica contemporánea ha evolucionado desde la luz suave y plana hacia composiciones dramáticas en clave baja. El uso de modificadores como el Striplight de 30x120cm combinado con panales de abeja permite direccionar el destello exclusivamente hacia la proteína principal...'
+    excerpt: {
+      DE: 'Wie man tiefe Schatten und plastische Tiefe durch gezielte Lichtführung mit Wabenrastern skulpturiert.',
+      EN: 'How to sculpt deep shadows and dimensional volume using targeted hard-light modifiers with honeycomb grids.'
+    },
+    content: {
+      DE: 'Die moderne Food- und Produktfotografie hat sich von flachem, gleichmäßigem Licht zu dramatischen Low-Key-Kompositionen gewandelt. Durch den präzisen Einsatz von Striplights mit Wabenrastern lässt sich der Blitz exklusiv auf die Hauptkomponenten richten, während die Textur lebendig hervortritt.',
+      EN: 'Contemporary commercial photography has evolved from flat, uniform diffusion toward dramatic low-key compositions. Using directional stripboxes with grids allows us to carve specular highlights while keeping the background in deep, velvety contrast.'
+    }
   },
   {
     id: 'post-2',
-    title: 'Por qué Elegimos Formato Medio Hasselblad H6D-100c para Campañas de Lujo',
-    category: 'Equipamiento & Gear',
-    date: '02 Septiembre 2024',
-    readTime: '8 min lectura',
+    title: {
+      DE: 'Warum wir das Mittelformat für High-End-Luxuskampagnen wählen',
+      EN: 'Why We Choose Medium Format for High-End Luxury Campaigns'
+    },
+    category: {
+      DE: 'Ausrüstung & Optik',
+      EN: 'Equipment & Optics'
+    },
+    date: {
+      DE: '02. September 2024',
+      EN: 'September 2, 2024'
+    },
+    readTime: {
+      DE: '8 Min. Lesezeit',
+      EN: '8 min read'
+    },
     imageUrl: '/images/marcas/SAN08167.jpg',
-    excerpt: 'Análisis del rango dinámico de 15 pasos y la profundidad de color de 16 bits en producciones editoriales impresas.',
-    content: 'En la fotografía de alta gama, la resolución no se mide únicamente en megapíxeles sino en la suavidad de las transiciones tonales...'
+    excerpt: {
+      DE: 'Analyse des 16-Bit-Farbumfangs und des außergewöhnlichen Dynamikumfangs bei gedruckten Kampagnen.',
+      EN: 'Analyzing the 16-bit color depth and 15-stop dynamic range in print editorial productions.'
+    },
+    content: {
+      DE: 'In der High-End-Fotografie misst sich Qualität nicht bloß in Megapixeln, sondern im subtilen Übergang der Tonwerte. Die sanfte Abstufung in den Lichtern und die Farbtreue feinster Texturen machen den entscheidenden Unterschied bei Premium-Marken.',
+      EN: 'In luxury advertising, resolution is not measured merely by pixel count, but by tonal smoothness. The transition from specular highlights to shadow roll-off creates an unmistakably tactile dimension.'
+    }
   },
   {
     id: 'post-3',
-    title: 'Flujo de Trabajo Tethered Directo al Cliente en Capture One Studio',
-    category: 'Workflow & Color',
-    date: '18 Agosto 2024',
-    readTime: '5 min lectura',
+    title: {
+      DE: 'Direkter Tethered-Workflow zum Kunden im Capture One Studio',
+      EN: 'Direct Client Tethered Workflow in Capture One Studio'
+    },
+    category: {
+      DE: 'Workflow & Farbe',
+      EN: 'Workflow & Color'
+    },
+    date: {
+      DE: '18. August 2024',
+      EN: 'August 18, 2024'
+    },
+    readTime: {
+      DE: '5 Min. Lesezeit',
+      EN: '5 min read'
+    },
     imageUrl: '/images/lifestyle/SAN01065.jpg',
-    excerpt: 'Optimizando el tiempo de rodaje con pre-visualización en tiempo real y calibración de color Eizo en set.',
-    content: 'Disparar conectado a un MacBook Pro M3 Max con monitor calibrado por hardware garantiza que el director de arte y el cliente aprueben cada encuadre...'
+    excerpt: {
+      DE: 'Optimierung von Drehzeiten durch Echtzeit-Farbkalibrierung und Live-Vorschau am kalibrierten Set-Monitor.',
+      EN: 'Optimizing shoot efficiency through real-time color calibration and live review on hardware-calibrated set monitors.'
+    },
+    content: {
+      DE: 'Das Arbeiten im kabelgebundenen Tethered-Setup an kalibrierten Eizo-Monitoren garantiert, dass Art Directors und Kunden jedes Framing und jeden Farbton noch am Set abnehmen können. Das spart Nachbearbeitungszeit und sichert den visuellen Standard.',
+      EN: 'Shooting tethered directly into calibrated hardware monitors ensures art directors and clients can approve each frame and color grading in real time, streamlining delivery and guaranteeing consistent brand standards.'
+    }
   }
 ];
 
 export const BlogGrid: React.FC = () => {
+  const { lang, t } = useLanguage();
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+
+  const isDe = lang === 'DE';
 
   return (
     <section id="blog" className="pt-56 pb-20 bg-white w-full relative">
@@ -56,19 +114,21 @@ export const BlogGrid: React.FC = () => {
 
       <div className="w-full max-w-[100vw] px-4 sm:px-8 md:px-12 lg:px-16 relative z-10">
         
-        {/* TITLE WITH SOFT LAVENDER EDITORIAL ITALIC ULTRA-THIN TYPOGRAPHY MATCHING REFERENCE */}
+        {/* TITLE */}
         <div className="mb-10 pb-6 border-b border-gray-100 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center space-x-2 text-xs font-sans uppercase tracking-widest text-[#A594F9] font-medium">
               <BookOpen className="w-4 h-4 text-[#A594F9]" />
-              <span>Diario Visual & Artículos Técnicos</span>
+              <span>{isDe ? 'Visuelles Journal & Technische Notizen' : 'Visual Journal & Technical Notes'}</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extralight text-[#0F0F12] tracking-tight">
-              Blog Editorial & <span className="font-editorial-italic font-normal text-4xl sm:text-6xl text-[#A594F9]">Apuntes de Estudio</span>
+              {isDe ? 'Editorial Journal &' : 'Editorial Journal &'} <span className="font-editorial-italic font-normal text-4xl sm:text-6xl text-[#A594F9]">{isDe ? 'Studio-Notizen' : 'Studio Notes'}</span>
             </h2>
           </div>
           <p className="text-xs font-sans text-[#666670] max-w-md font-light">
-            Reflexiones sobre dirección de arte, técnica de iluminación en plató y tecnología de captura digital.
+            {isDe
+              ? 'Einblicke in Art Direction, Lichtgestaltung am Set und digitale Bildtechnologien.'
+              : 'Insights on art direction, on-set lighting design, and digital capture technologies.'}
           </p>
         </div>
 
@@ -84,23 +144,25 @@ export const BlogGrid: React.FC = () => {
                 <div className="aspect-[16/10] w-full overflow-hidden bg-gray-100 rounded-none">
                   <img
                     src={post.imageUrl}
-                    alt={post.title}
+                    alt={post.title[lang]}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
 
                 <div className="p-6 space-y-3">
                   <div className="flex items-center justify-between text-[11px] font-sans text-gray-500">
-                    <span className="bg-gray-100 px-3 py-1 rounded-full text-[10px] text-[#0F0F12] font-semibold">{post.category}</span>
-                    <span>{post.date}</span>
+                    <span className="bg-gray-100 px-3 py-1 rounded-full text-[10px] text-[#0F0F12] font-semibold">
+                      {post.category[lang]}
+                    </span>
+                    <span>{post.date[lang]}</span>
                   </div>
 
                   <h3 className="text-xl font-light text-[#0F0F12] group-hover:text-[#A594F9] transition-colors font-outfit">
-                    {post.title}
+                    {post.title[lang]}
                   </h3>
 
                   <p className="text-xs text-[#666670] font-light leading-relaxed">
-                    {post.excerpt}
+                    {post.excerpt[lang]}
                   </p>
                 </div>
               </div>
@@ -108,10 +170,10 @@ export const BlogGrid: React.FC = () => {
               <div className="p-6 pt-0 flex items-center justify-between text-xs font-sans text-[#0F0F12]">
                 <span className="flex items-center space-x-1.5 text-gray-400 font-light">
                   <Clock className="w-3.5 h-3.5" />
-                  <span>{post.readTime}</span>
+                  <span>{post.readTime[lang]}</span>
                 </span>
                 <span className="flex items-center space-x-1 text-[#A594F9] group-hover:translate-x-1 transition-transform font-medium">
-                  <span>Leer Artículo</span>
+                  <span>{isDe ? 'Artikel lesen' : 'Read Article'}</span>
                   <ArrowRight className="w-4 h-4" />
                 </span>
               </div>
@@ -121,7 +183,7 @@ export const BlogGrid: React.FC = () => {
 
       </div>
 
-      {/* ARTICLE READER MODAL WITH SEMI-TRANSPARENT LILA BACKDROP */}
+      {/* ARTICLE READER MODAL */}
       {selectedPost && (
         <div
           onClick={() => setSelectedPost(null)}
@@ -133,8 +195,8 @@ export const BlogGrid: React.FC = () => {
           >
             <button
               onClick={() => setSelectedPost(null)}
-              className="absolute top-6 right-6 p-2 rounded-full glass-apple text-gray-500 hover:text-black transition-colors"
-              aria-label="Cerrar artículo"
+              className="absolute top-6 right-6 p-2 rounded-full glass-apple text-gray-500 hover:text-black transition-colors cursor-pointer"
+              aria-label={t('modal.close')}
             >
               <X className="w-6 h-6" />
             </button>
@@ -142,30 +204,32 @@ export const BlogGrid: React.FC = () => {
             <div className="space-y-6">
               <div className="space-y-2 border-b border-gray-200/80 pb-4">
                 <span className="text-xs font-sans text-[#A594F9] uppercase tracking-widest font-medium">
-                  {selectedPost.category} • {selectedPost.date}
+                  {selectedPost.category[lang]} • {selectedPost.date[lang]}
                 </span>
                 <h2 className="text-3xl font-extralight text-[#0F0F12] font-outfit">
-                  {selectedPost.title}
+                  {selectedPost.title[lang]}
                 </h2>
               </div>
 
               <div className="aspect-[16/9] w-full overflow-hidden rounded-2xl bg-gray-100">
-                <img src={selectedPost.imageUrl} alt={selectedPost.title} className="w-full h-full object-cover" />
+                <img src={selectedPost.imageUrl} alt={selectedPost.title[lang]} className="w-full h-full object-cover" />
               </div>
 
               <div className="prose text-xs sm:text-sm text-[#666670] leading-relaxed space-y-4 font-light">
-                <p>{selectedPost.content}</p>
+                <p>{selectedPost.content[lang]}</p>
                 <p>
-                  Para consultar más sobre nuestros flujos de trabajo de iluminación o solicitar asesoría en producciones comerciales, no dudes en ponerte en contacto con el equipo de matices.
+                  {isDe
+                    ? 'Für weitere Informationen zu unseren Licht-Setups oder für Beratung bei kommerziellen Produktionen steht Ihnen das Team von matices gerne zur Verfügung.'
+                    : 'For inquiries regarding our lighting workflows or production consultations, feel free to contact the matices studio team.'}
                 </p>
               </div>
 
               <div className="pt-6 border-t border-gray-200 flex justify-end">
                 <button
                   onClick={() => setSelectedPost(null)}
-                  className="px-6 py-2.5 rounded-full bg-[#0F0F12] text-white font-sans text-xs uppercase font-medium"
+                  className="px-6 py-2.5 rounded-full bg-[#0F0F12] text-white font-sans text-xs uppercase font-medium hover:bg-[#A594F9] transition-colors cursor-pointer"
                 >
-                  Cerrar Artículo
+                  {isDe ? 'Artikel schließen' : 'Close Article'}
                 </button>
               </div>
             </div>

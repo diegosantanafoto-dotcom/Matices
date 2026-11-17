@@ -3,13 +3,26 @@ import { PORTFOLIO_ITEMS, type PortfolioItem } from '../data/portfolioData';
 import { HOME_GALLERY_IDS } from '../data/homeGalleryData';
 import { LightboxModal } from './LightboxModal';
 import { Maximize2, ArrowUpRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface HomeGalleryProps {
   onOpenBooking: (type?: string) => void;
 }
 
 export const HomeGallery: React.FC<HomeGalleryProps> = ({ onOpenBooking }) => {
+  const { t } = useLanguage();
   const [activeItemIndex, setActiveItemIndex] = useState<number | null>(null);
+
+  const getCategoryLabel = (cat: string) => {
+    const map: Record<string, string> = {
+      bodas: 'sub.bodas',
+      lifestyle: 'sub.lifestyle',
+      retratos: 'sub.retratos',
+      moda: 'sub.moda',
+      marcas: 'sub.marcas',
+    };
+    return t(map[cat] || cat);
+  };
 
   // Map HOME_GALLERY_IDS to actual PortfolioItem objects
   const homeItems = useMemo(() => {
@@ -60,7 +73,7 @@ export const HomeGallery: React.FC<HomeGalleryProps> = ({ onOpenBooking }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 text-white">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-sans font-bold uppercase tracking-widest bg-black/60 px-2.5 py-1 text-white">
-                      {item.categoryLabel}
+                      {getCategoryLabel(item.category)}
                     </span>
                     <Maximize2 className="w-4 h-4 text-white" />
                   </div>
